@@ -4,460 +4,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ဂျပန်ကြိယာ လမ်းညွှန်နှင့် Game Quiz</title>
+    <title>ဂျပန်ကြိယာ လေ့လာကြမယ်</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Padauk', sans-serif;
-            touch-action: manipulation;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        main {
-            flex-grow: 1;
-        }
-
-        .tab-btn {
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .tab-btn.active {
-            background-color: #3b82f6;
-            color: white;
-        }
-
-        .tab-btn:not(.active) {
-            background-color: #e5e7eb;
-            color: #4b5563;
-        }
-
-        .guide-content h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            border-bottom: 3px solid #60a5fa;
-            padding-bottom: 0.5rem;
-        }
-
-        .guide-content h4 {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #1e40af;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .guide-content table {
-            width: 100%;
-            min-width: 600px;
-            border-collapse: collapse;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-
-        .guide-content th,
-        .guide-content td {
-            border: 1px solid #d1d5db;
-            padding: 0.75rem;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        .guide-content th {
-            background-color: #f3f4f6;
-            font-weight: bold;
-        }
-
-        .guide-content .example {
-            color: #1d4ed8;
-            font-weight: bold;
-        }
-
-        .guide-content .rule {
-            color: #be123c;
-            font-weight: bold;
-        }
-
-        .guide-content .exception {
-            background-color: #fef9c3;
-        }
-
-        .guide-content .hiragana-chart td {
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .guide-content .highlight-i {
-            background-color: #e0f2fe;
-        }
-
-        .guide-content .highlight-e {
-            background-color: #dcfce7;
-        }
-
-        .correct {
-            border-color: #22c55e;
-            background-color: #f0fdf4;
-        }
-
-        .incorrect {
-            border-color: #ef4444;
-            background-color: #fef2f2;
-        }
-
-        .feedback-correct {
-            color: #16a34a;
-        }
-
-        .feedback-incorrect {
-            color: #dc2626;
-        }
-
-        .btn-primary {
-            background-color: #3b82f6;
-            color: white;
-            transition: background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
-
-        .btn-secondary {
-            background-color: #6b7280;
-            color: white;
-            transition: background-color: 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-    </style>
 </head>
 
-<body class="bg-slate-100">
+<body class="theme-light">
     <main class="flex items-center justify-center p-2 md:p-4">
         <div id="app-container" class="w-full max-w-3xl mx-auto">
-            <!-- User Form Panel -->
-            <div id="user-form-panel" class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+            <div id="user-form-panel" class="bg-card rounded-2xl shadow-xl p-6 md:p-8 text-text-primary">
                 <div class="text-center mb-6">
-                    <h1 class="text-2xl md:text-3xl font-bold text-slate-800">ဂျပန်ကြိယာ လေ့လာကြမယ်</h1>
-                    <p class="text-slate-500 mt-2">ဂိမ်းမစခင် အချက်အလက်ဖြည့်စွက်ပေးပါ။</p>
+                    <h1 class="text-2xl md:text-3xl font-bold"><i class="fas fa-torii-gate text-primary"></i> ဂျပန်ကြိယာ လေ့လာကြမယ်</h1>
+                    <p class="text-text-secondary mt-2">ဂိမ်းမစခင် အချက်အလက်ဖြည့်စွက်ပေးပါ။</p>
                 </div>
                 <div class="space-y-4">
                     <div>
-                        <label for="user-name-input" class="block mb-2 font-semibold text-slate-700">အမည်</label>
+                        <label for="user-name-input" class="block mb-2 font-semibold"><i class="fas fa-user"></i> အမည်</label>
                         <input type="text" id="user-name-input" placeholder="သင်၏အမည်ကိုထည့်ပါ"
-                            class="w-full p-3 text-lg border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            class="w-full p-3 text-lg bg-input border-2 border-border rounded-lg focus:ring-2 focus:ring-primary">
                     </div>
                     <div>
-                        <label for="level-input" class="block mb-2 font-semibold text-slate-700">ဂျပန်စာ
-                            အရည်အချင်းအဆင့်</label>
+                        <label for="level-input" class="block mb-2 font-semibold"><i class="fas fa-graduation-cap"></i> ဂျပန်စာ အဆင့်</label>
                         <input type="text" id="level-input" placeholder="ဥပမာ: N5, N4"
-                            class="w-full p-3 text-lg border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            class="w-full p-3 text-lg bg-input border-2 border-border rounded-lg focus:ring-2 focus:ring-primary">
+                    </div>
+                     <div>
+                        <label for="theme-select" class="block mb-2 font-semibold"><i class="fas fa-palette"></i> Theme</label>
+                        <select id="theme-select" class="w-full p-3 text-lg bg-input border-2 border-border rounded-lg">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="sakura">Sakura</option>
+                        </select>
                     </div>
                     <button id="start-game-btn"
-                        class="w-full btn-primary font-bold py-3 rounded-lg text-lg mt-4">ဂိမ်းစရန်</button>
+                        class="w-full btn-primary font-bold py-3 rounded-lg text-lg mt-4"><i class="fas fa-play-circle"></i> ဂိမ်းစရန်</button>
                 </div>
             </div>
 
-            <!-- Main Game Container (Quiz and Guide) -->
-            <div id="main-game-container" class="bg-white rounded-2xl shadow-xl p-4 md:p-6 hidden">
+            <div id="main-game-container" class="bg-card rounded-2xl shadow-xl p-4 md:p-6 hidden text-text-primary">
                 <div class="text-center mb-4">
-                    <h1 class="text-2xl md:text-3xl font-bold text-slate-800">ဂျပန်ကြိယာ လေ့လာကြမယ်</h1>
-                    <p class="text-slate-500 mt-1">ပုံစံပြောင်းနည်းလမ်းညွှန်နှင့် Game Quiz</p>
+                    <h1 class="text-2xl md:text-3xl font-bold"><i class="fas fa-torii-gate text-primary"></i> ဂျပန်ကြိယာ လေ့လာကြမယ်</h1>
+                    <p class="text-text-secondary mt-1">Flashcard Quiz နှင့် လမ်းညွှန်</p>
                 </div>
 
-                <!-- Tabs -->
-                <div class="flex border-b border-gray-200 mb-4">
-                    <button id="tab-quiz"
-                        class="tab-btn flex-1 py-3 px-2 md:px-4 font-bold text-base md:text-lg rounded-t-lg active">ကစားရန်
-                        (Quiz)</button>
-                    <button id="tab-guide"
-                        class="tab-btn flex-1 py-3 px-2 md:px-4 font-bold text-base md:text-lg rounded-t-lg">လမ်းညွှန်
-                        (Guide)</button>
+                <div class="flex border-b border-border mb-4 flex-wrap">
+                    <button id="tab-guide" class="tab-btn flex-grow py-3 px-2 font-bold text-sm md:text-base rounded-t-lg"><i class="fas fa-book"></i> လမ်းညွှန်</button>
+                    <button data-mode="mixed" class="tab-btn quiz-tab flex-grow py-3 px-2 font-bold text-sm md:text-base rounded-t-lg active"><i class="fas fa-random"></i> စုံလင်</button>
+                    <button data-mode="plain" class="tab-btn quiz-tab flex-grow py-3 px-2 font-bold text-sm md:text-base rounded-t-lg"><i class="fas fa-language"></i> ရိုးရိုးပုံစံ</button>
+                    <button data-mode="polite" class="tab-btn quiz-tab flex-grow py-3 px-2 font-bold text-sm md:text-base rounded-t-lg"><i class="fas fa-user-tie"></i> ယဉ်ကျေးသောပုံစံ</button>
                 </div>
 
-                <!-- Quiz Panel -->
-                <div id="panel-quiz">
-                    <div id="quiz-main-view">
-                        <div class="flex justify-between items-center bg-blue-50 rounded-lg p-3 mb-4">
-                            <div class="text-base md:text-lg"><span class="font-semibold text-slate-700">အမှတ်:</span>
-                                <span id="score" class="font-bold text-blue-600">0</span></div>
-                            <div class="text-base md:text-lg"><span
-                                    class="font-semibold text-slate-700">မေးခွန်း:</span> <span id="question-count"
-                                    class="font-bold text-blue-600">0 / 106</span></div>
+                <div id="panel-container">
+                    <div id="panel-quiz">
+                        <div id="quiz-main-view">
+                            <div class="flex justify-between items-center bg-background rounded-lg p-3 mb-4">
+                                <div class="text-sm md:text-lg"><span class="font-semibold"><i class="fas fa-star text-yellow-400"></i> အမှတ်:</span>
+                                    <span id="score" class="font-bold text-primary">0</span></div>
+                                <div class="text-sm md:text-lg"><span
+                                        class="font-semibold"><i class="fas fa-question-circle text-blue-400"></i> မေးခွန်း:</span> <span id="question-count"
+                                        class="font-bold text-primary">0 / 151</span></div>
+                            </div>
+                            
+                            <div id="flashcard-container" class="bg-background rounded-lg p-5 text-center mb-4 min-h-[150px] flex flex-col justify-center cursor-pointer border border-border">
+                                <div id="flashcard-front">
+                                    <p class="text-lg md:text-xl text-text-secondary mb-2">"<strong id="verb-start"
+                                            class="text-xl md:text-2xl text-primary font-bold"></strong>" ၏ <strong
+                                            id="form-type" class="text-xl md:text-2xl text-accent font-bold"></strong>
+                                        ကဘာလဲ?</p>
+                                    <p class="text-base md:text-md text-text-secondary" id="verb-meaning"></p>
+                                </div>
+                                <div id="flashcard-back" class="hidden">
+                                    <p class="text-2xl md:text-3xl text-green-500 font-bold" id="correct-answer"></p>
+                                </div>
+                            </div>
+
+                            <div id="button-group" class="space-y-3">
+                                <button id="flip-btn" class="w-full btn-secondary font-bold py-3 rounded-lg text-lg"><i class="fas fa-sync-alt"></i> အဖြေကြည့်ရန်</button>
+                                <div id="feedback-buttons" class="hidden grid grid-cols-2 gap-3">
+                                    <button id="correct-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg text-lg"><i class="fas fa-check"></i> မှန်တယ်</button>
+                                    <button id="incorrect-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg text-lg"><i class="fas fa-times"></i> မှားတယ်</button>
+                                </div>
+                            </div>
                         </div>
-                        <div id="question-card"
-                            class="bg-slate-50 rounded-lg p-5 text-center mb-4 min-h-[120px] flex flex-col justify-center">
-                            <p class="text-lg md:text-xl text-slate-600 mb-2">"<strong id="verb-start"
-                                    class="text-xl md:text-2xl text-blue-700 font-bold"></strong>" ၏ <strong
-                                    id="form-type" class="text-xl md:text-2xl text-red-500 font-bold"></strong>
-                                ကိုရေးပါ။</p>
-                            <p class="text-base md:text-md text-slate-500" id="verb-meaning"></p>
-                        </div>
-                        <div class="relative mb-4">
-                            <input type="text" id="answer-input" placeholder="အဖြေကို ဟီရာဂါနာဖြင့်ရေးပါ"
-                                class="w-full p-4 text-lg border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                        </div>
-                        <div id="feedback" class="text-center min-h-[2.5rem] mb-4 text-lg font-semibold"></div>
-                        <div id="button-group">
-                            <button id="check-btn"
-                                class="w-full btn-primary font-bold py-3 rounded-lg text-lg">အဖြေစစ်ရန်</button>
-                            <button id="next-btn"
-                                class="w-full btn-secondary font-bold py-3 rounded-lg text-lg hidden">နောက်တစ်ပုဒ်</button>
+
+                        <div id="end-game-screen" class="text-center hidden p-4 md:p-6">
+                            <div id="trophy-icon" class="text-6xl mb-4 animate-bounce">🏆</div>
+                            <h2 id="congrats-message" class="text-2xl md:text-3xl font-bold text-yellow-500 mb-2">
+                                ဂုဏ်ယူပါတယ်!</h2>
+                            <p class="text-xl text-text-primary mb-4">ဂိမ်းပြီးဆုံးသွားပါပြီ။</p>
+                            <div class="bg-background rounded-lg p-4 mb-6">
+                                <p class="text-lg text-text-secondary">စုစုပေါင်းရမှတ်</p>
+                                <p id="final-score" class="text-4xl font-bold text-primary"></p>
+                                <p id="score-percentage" class="text-md text-text-secondary mt-1"></p>
+                            </div>
+                            <button id="restart-btn"
+                                class="w-full btn-primary font-bold py-3 rounded-lg text-lg"><i class="fas fa-redo"></i> အစမှပြန်ကစားရန်</button>
                         </div>
                     </div>
-                    <!-- End Game Screen -->
-                    <div id="end-game-screen" class="text-center hidden p-4 md:p-6">
-                        <div id="trophy-icon" class="text-6xl mb-4 animate-bounce">🏆</div>
-                        <h2 id="congrats-message" class="text-2xl md:text-3xl font-bold text-yellow-500 mb-2">
-                            ဂုဏ်ယူပါတယ်!</h2>
-                        <p class="text-xl text-slate-700 mb-4">ဂိမ်းပြီးဆုံးသွားပါပြီ။</p>
-                        <div class="bg-blue-100 rounded-lg p-4 mb-6">
-                            <p class="text-lg text-slate-600">စုစုပေါင်းရမှတ်</p>
-                            <p id="final-score" class="text-4xl font-bold text-blue-600"></p>
-                            <p id="score-percentage" class="text-md text-slate-500 mt-1"></p>
-                        </div>
-                        <button id="restart-btn"
-                            class="w-full btn-primary font-bold py-3 rounded-lg text-lg">အစမှပြန်ကစားရန်</button>
-                    </div>
-                </div>
 
-                <!-- Guide Panel -->
-                <div id="panel-guide" class="hidden">
-                    <div class="guide-content p-2 leading-relaxed">
-                        <h3>ကြိယာအုပ်စုခွဲနည်း (Verb Categorization)</h3>
-                        <p>ဂျပန်ကြိယာများကို အုပ်စု ၁၊ ၂၊ ၃ ဟူ၍ ခွဲခြားထားပြီး အုပ်စုပေါ်မူတည်၍ ပုံစံပြောင်းလဲပုံ
-                            ကွာခြားပါသည်။ အုပ်စုမှန်မှန်ကန်ကန်ခွဲခြားနိုင်ရန် အလွန်အရေးကြီးပါသည်။</p>
-
-                        <h4>၁။ ます形 မှ အုပ်စုခွဲနည်း</h4>
-                        <p>ます ၏ ရှေ့ကစာလုံး (အသံ) ကိုကြည့်၍ အုပ်စုခွဲခြားနိုင်ပါသည်။</p>
-                        <div class="overflow-x-auto shadow-md rounded-lg">
-                            <table class="hiragana-chart">
-                                <tr>
-                                    <td class="highlight-i">い (i)</td>
-                                    <td class="highlight-i">き</td>
-                                    <td class="highlight-i">し</td>
-                                    <td class="highlight-i">ち</td>
-                                    <td class="highlight-i">に</td>
-                                    <td class="highlight-i">ひ</td>
-                                    <td class="highlight-i">み</td>
-                                    <td class="highlight-i">り</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-e">え (e)</td>
-                                    <td class="highlight-e">け</td>
-                                    <td class="highlight-e">せ</td>
-                                    <td class="highlight-e">て</td>
-                                    <td class="highlight-e">ね</td>
-                                    <td class="highlight-e">へ</td>
-                                    <td class="highlight-e">め</td>
-                                    <td class="highlight-e">れ</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="overflow-x-auto shadow-md rounded-lg mt-4">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>အုပ်စု</th>
-                                        <th>ခွဲခြားနည်း</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Group 2</td>
-                                        <td>ます ရှေ့ကအသံသည် <span class="rule">え (e) သံတန်း</span> (အပေါ်ဇယား
-                                            အစိမ်းရောင်တန်း) ဖြစ်လျှင် အမြဲတမ်း Group 2 ဖြစ်သည်။<br><span
-                                                class="example">たべます、おしえます、でかけます</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 1 or 2</td>
-                                        <td>ます ရှေ့ကအသံသည် <span class="rule">い (i) သံတန်း</span> (အပေါ်ဇယား
-                                            အပြာရောင်တန်း) ဖြစ်လျှင် Group 1 သို့မဟုတ် Group 2 ဖြစ်နိုင်သည်။
-                                            ခြွင်းချက်များကို မှတ်သားရန်လိုအပ်သည်။</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 3</td>
-                                        <td><span class="example">します</span> နှင့် <span class="example">きます</span>
-                                            နှစ်လုံးတည်းသာဖြစ်သည်။</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h4>"い" သံတန်းအတွက် ခြွင်းချက်များ</h4>
-                        <div class="overflow-x-auto shadow-md rounded-lg">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>အုပ်စု</th>
-                                        <th>ဥပမာများ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Group 2 (စည်းမျဉ်းအတိုင်း)</td>
-                                        <td>တစ်လုံးတည်းသော ဟီရာဂါနာ + ます<br><span
-                                                class="example">みます、います</span><br><br>အခြား Group 2 ကြိယာများ<br><span
-                                                class="example">おきます、おります、あびます、かります</span></td>
-                                    </tr>
-                                    <tr class="exception">
-                                        <td>Group 1 (ခြွင်းချက်)</td>
-                                        <td>အောက်ပါကြိယာများသည် Group 2 ပုံစံပေါက်သော်လည်း Group 1 ဖြစ်သည်။<br><span
-                                                class="example">かえります、はいります、しります、きります、はしります、いります(လိုအပ်သည်)</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h3>辞書形 မှ အုပ်စုခွဲနည်း</h3>
-                        <p>ကြိယာ၏ အဆုံးသတ်ပုံစံကို ကြည့်၍ အုပ်စုခွဲခြားနိုင်ပါသည်။</p>
-                        <div class="overflow-x-auto shadow-md rounded-lg">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>အုပ်စု</th>
-                                        <th>ခွဲခြားနည်း</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Group 2</td>
-                                        <td>အဆုံးသတ်သည် <span class="rule">る</span> ဖြစ်ပြီး၊ <span
-                                                class="rule">る</span> ၏ရှေ့ကအသံသည် <span class="rule">い</span> သို့မဟုတ်
-                                            <span class="rule">え</span> သံတန်းဖြစ်လျှင် Group 2 ဖြစ်သည်။
-                                            (ခြွင်းချက်များမှလွဲ၍)<br><span class="example">たべる (べ-e), みる (み-i), おきる
-                                                (き-i)</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 1</td>
-                                        <td>၁။ <span class="rule">る</span> ဖြင့် မဆုံးသောကြိယာများအားလုံး။<br><span
-                                                class="example">かく, のむ, あう</span><br>၂။ <span class="rule">る</span>
-                                            ဖြင့်ဆုံးသော်လည်း၊ ရှေ့ကအသံသည် <span class="rule">い/え</span> သံတန်းမဟုတ်သော
-                                            ကြိယာများ။<br><span class="example">つくる (く-u), のぼる (ぼ-o)</span><br>၃။ <span
-                                                class="rule">る</span> ဖြင့်ဆုံးပြီး ရှေ့က <span class="rule">い/え</span>
-                                            သံဖြစ်သော်လည်း Group 1 ဖြစ်သော ခြွင်းချက်များ။<br><span class="example">かえる,
-                                                はいる, しる, きる</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 3</td>
-                                        <td><span class="example">する</span> နှင့် <span class="example">くる</span>
-                                            နှစ်လုံးတည်းသာဖြစ်သည်။</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h3>ပုံစံပြောင်းနည်းများ</h3>
-                        <h4>၁။ 辞書形 → ます形</h4>
-                        <div class="overflow-x-auto shadow-md rounded-lg">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>အုပ်စု</th>
-                                        <th>ပြောင်းလဲနည်း</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Group 1</td>
-                                        <td>အဆုံးမှ <span class="rule">う</span> သံကို <span class="rule">い</span>
-                                            သံပြောင်းပြီး ます ပေါင်းပါ။ <br><span class="example">かく → かきます</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 2</td>
-                                        <td>အဆုံးမှ <span class="rule">る</span> ကိုဖြုတ်ပြီး ます ပေါင်းပါ။ <br><span
-                                                class="example">たべる → たべます</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 3</td>
-                                        <td><span class="example">する → します</span>, <span class="example">くる → きます</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h4>၂။ 辞書形 → ない形</h4>
-                        <div class="overflow-x-auto shadow-md rounded-lg">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>အုပ်စု</th>
-                                        <th>ပြောင်းလဲနည်း</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Group 1</td>
-                                        <td>အဆုံးမှ <span class="rule">う</span> သံကို <span class="rule">あ</span>
-                                            သံပြောင်းပြီး ない ပေါင်းပါ။ <br><span class="example">かく → かかない</span>
-                                            <br>ခြွင်းချက်: う ဖြင့်ဆုံးလျှင် <span class="rule">わない</span> ဖြစ်မည်။
-                                            <span class="example">かう → かわない</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 2</td>
-                                        <td>အဆုံးမှ <span class="rule">る</span> ကိုဖြုတ်ပြီး ない ပေါင်းပါ။ <br><span
-                                                class="example">たべる → たべない</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 3</td>
-                                        <td><span class="example">する → しない</span>, <span class="example">くる → こない</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h4>၃။ 辞書形 → て形</h4>
-                        <div class="overflow-x-auto shadow-md rounded-lg">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>အုပ်စု</th>
-                                        <th>ပြောင်းလဲနည်း</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Group 1</td>
-                                        <td>အဆုံးသတ်စာလုံးပေါ်မူတည်၍ ပြောင်းလဲပါသည်။<br>
-                                            ・う, つ, る → <span class="rule">って</span> (<span
-                                                class="example">かう→かって</span>)<br>
-                                            ・む, ぶ, ぬ → <span class="rule">んで</span> (<span
-                                                class="example">よむ→よんで</span>)<br>
-                                            ・く → <span class="rule">いて</span> (<span class="example">かく→かいて</span>)<br>
-                                            ・ぐ → <span class="rule">いで</span> (<span
-                                                class="example">およぐ→およいで</span>)<br>
-                                            ・す → <span class="rule">して</span> (<span
-                                                class="example">はなす→はなして</span>)<br>
-                                            ・ခြွင်းချက်: <span class="example">いく → いって</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 2</td>
-                                        <td>အဆုံးမှ <span class="rule">る</span> ကိုဖြုတ်ပြီး て ပေါင်းပါ။<br><span
-                                                class="example">たべる → たべて</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Group 3</td>
-                                        <td><span class="example">する → して</span>, <span class="example">くる → きて</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div id="panel-guide" class="hidden">
+                        <div class="guide-content p-2 leading-relaxed">
+                           </div>
                     </div>
                 </div>
             </div>
@@ -468,302 +120,7 @@
         <p>Email: sysadm.winpaingsoe@gmail.com | Phone: 0619623368</p>
     </footer>
 
-    <script>
-        const verbs = [
-            { masu: 'てつだいます', jisho: 'てつだう', te: 'てつだって', nai: 'てつだわない', meaning: 'ကူညီသည်' },
-            { masu: 'みます', jisho: 'みる', te: 'みて', nai: 'みない', meaning: 'ကြည့်သည်။မြင်သည်။' },
-            { masu: 'よやくします', jisho: 'よやくする', te: 'よやくして', nai: 'よやくしない', meaning: 'ကြိုတင်မှာသည်' },
-            { masu: 'むかえます', jisho: 'むかえる', te: 'むかえて', nai: 'むかえない', meaning: 'ကြိုဆိုသည်' },
-            { masu: 'よびます', jisho: 'よぶ', te: 'よんで', nai: 'よばない', meaning: 'ခေါ်သည်' },
-            { masu: 'つれていきます', jisho: 'つれていく', te: 'つれていって', nai: 'つれていかない', meaning: 'ခေါ်သွားသည်' },
-            { masu: 'つれてきます', jisho: 'つれてくる', te: 'つれてきて', nai: 'つれてこない', meaning: 'ခေါ်လာသည်' },
-            { masu: 'かします', jisho: 'かす', te: 'かして', nai: 'かさない', meaning: 'ချေးငှားသည်' },
-            { masu: 'かります', jisho: 'かりる', te: 'かりて', nai: 'かりない', meaning: 'ချေးယူသည်' },
-            { masu: 'まがります', jisho: 'まがる', te: 'まがって', nai: 'まがらない', meaning: 'ချိုးကွေ့သည်' },
-            { masu: 'はなします', jisho: 'はなす', te: 'はなして', nai: 'はなさない', meaning: 'စကားပြောသည်' },
-            { masu: 'はじめます', jisho: 'はじめる', te: 'はじめて', nai: 'はじめない', meaning: 'စတင်သည်' },
-            { masu: 'かんがえます', jisho: 'かんがえる', te: 'かんがえて', nai: 'かんがえない', meaning: 'စဉ်းစားသည်' },
-            { masu: 'あつめます', jisho: 'あつめる', te: 'あつめて', nai: 'あつめない', meaning: 'စုဆောင်းသည်' },
-            { masu: 'まちます', jisho: 'まつ', te: 'まって', nai: 'またない', meaning: 'စောင့်သည်' },
-            { masu: 'たべます', jisho: 'たべる', te: 'たべて', nai: 'たべない', meaning: 'စားသည်' },
-            { masu: 'あらいます', jisho: 'あらう', te: 'あらって', nai: 'あらわない', meaning: 'ဆေးကြောသည်' },
-            { masu: 'すいます', jisho: 'すう', te: 'すって', nai: 'すわない', meaning: 'ဆေးလိပ်သောက်သည်' },
-            { masu: 'つきます', jisho: 'つく', te: 'ついて', nai: 'つかない', meaning: 'ဆိုက်ရောက်သည်' },
-            { masu: 'かぶります', jisho: 'かぶる', te: 'かぶって', nai: 'かぶらない', meaning: 'ဆောင်းသည်။(ဦးထုပ်ကို)' },
-            { masu: 'かいものします', jisho: 'かいものする', te: 'かいものして', nai: 'かいものしない', meaning: 'ဈေးဝယ်သည်' },
-            { masu: 'とります', jisho: 'とる', te: 'とって', nai: 'とらない', meaning: 'ဓာတ်ပုံရိုက်သည်' },
-            { masu: 'のぼります', jisho: 'のぼる', te: 'のぼって', nai: 'のぼらない', meaning: 'တက်သည်' },
-            { masu: 'かけます', jisho: 'かける', te: 'かけて', nai: 'かけない', meaning: 'တပ်သည်၊ချိတ်သည်(မျက်မှန်ကို)' },
-            { masu: 'とめます', jisho: 'とめる', te: 'とめて', nai: 'とめない', meaning: 'တားသည်။ရပ်သည်။' },
-            { masu: 'ひきます', jisho: 'ひく', te: 'ひいて', nai: 'ひかない', meaning: 'တီးခတ်သည်' },
-            { masu: 'とまります', jisho: 'とまる', te: 'とまって', nai: 'とまらない', meaning: 'တည်းခိုသည်' },
-            { masu: 'あいます', jisho: 'あう', te: 'あって', nai: 'あわない', meaning: 'တွေ့သည်' },
-            { masu: 'しょくじします', jisho: 'しょくじする', te: 'しょくじして', nai: 'しょくじしない', meaning: 'ထမင်းစားသည်' },
-            { masu: 'おきます', jisho: 'おく', te: 'おいて', nai: 'おかない', meaning: 'ထားသည်' },
-            { masu: 'でます', jisho: 'でる', te: 'でて', nai: 'でない', meaning: 'ထွက်သည်' },
-            { masu: 'すわります', jisho: 'すわる', te: 'すわって', nai: 'すわらない', meaning: 'ထိုင်သည်' },
-            { masu: 'おもいます', jisho: 'おもう', te: 'おもって', nai: 'おもわない', meaning: 'ထင်မြင်သည်။ယူဆသည်။တွေးတောသည်။' },
-            { masu: 'おしえます', jisho: 'おしえる', te: 'おしえて', nai: 'おしえない', meaning: 'သင်ပေးသည်' },
-            { masu: 'ならいます', jisho: 'ならう', te: 'ならって', nai: 'ならわない', meaning: 'သင်ယူသည်' },
-            { masu: 'そうじします', jisho: 'そうじする', te: 'そうじして', nai: 'そうじしない', meaning: 'သန့်ရှင်းရေးလုပ်သည်' },
-            { masu: 'きをつけます', jisho: 'きをつける', te: 'きをつけて', nai: 'きをつけない', meaning: 'သတိထားသည်' },
-            { masu: 'いきます', jisho: 'いく', te: 'いって', nai: 'いかない', meaning: 'သွားသည်' },
-            { masu: 'のみます', jisho: 'のむ', te: 'のんで', nai: 'のまない', meaning: 'သောက်သည်' },
-            { masu: 'しります', jisho: 'しる', te: 'しって', nai: 'しらない', meaning: 'သိသည်' },
-            { masu: 'うたいます', jisho: 'うたう', te: 'うたって', nai: 'うたわない', meaning: 'သီချင်းဆိုသည်' },
-            { masu: 'いれます', jisho: 'いれる', te: 'いれて', nai: 'いれない', meaning: 'သွင်းသည်' },
-            { masu: 'けんきゅうします', jisho: 'けんきゅうする', te: 'けんきゅうして', nai: 'けんきゅうしない', meaning: 'သုတေသနပြုလုပ်သည်' },
-            { masu: 'つかれます', jisho: 'つかれる', te: 'つかれて', nai: 'つかれない', meaning: 'ပင်ပန်းသည်' },
-            { masu: 'おくります', jisho: 'おくる', te: 'おくって', nai: 'おくらない', meaning: 'ပို့သည်' },
-            { masu: 'もちます', jisho: 'もつ', te: 'もって', nai: 'もたない', meaning: 'ပိုင်ဆိုင်သည်။သယ်သည်။ကိုင်ထားသည်။' },
-            { masu: 'だします', jisho: 'だす', te: 'だして', nai: 'ださない', meaning: 'ပစ္စည်းထုတ်သည်။အစီရင်ခံစာတင်သည်။' },
-            { masu: 'あげます', jisho: 'あげる', te: 'あげて', nai: 'あげない', meaning: 'ပေးသည်' },
-            { masu: 'くれます', jisho: 'くれる', te: 'くれて', nai: 'くれない', meaning: 'ပေးသည် (မိမိအားပေးသည်)' },
-            { masu: 'はらいます', jisho: 'はらう', te: 'はらって', nai: 'はらわない', meaning: 'ပေးချေသည်' },
-            { masu: 'おわります', jisho: 'おわる', te: 'おわって', nai: 'おわらない', meaning: 'ပြီးဆုံးသည်' },
-            { masu: 'かえります', jisho: 'かえる', te: 'かえって', nai: 'かえらない', meaning: 'ပြန်သည်' },
-            { masu: 'かえします', jisho: 'かえす', te: 'かえして', nai: 'かえさない', meaning: 'ပြန်ပေးသည်' },
-            { masu: 'のりかえます', jisho: 'のりかえる', te: 'のりかえて', nai: 'のりかえない', meaning: 'ပြောင်းစီးသည်' },
-            { masu: 'します', jisho: 'する', te: 'して', nai: 'しない', meaning: 'ပြုလုပ်သည်' },
-            { masu: 'つくります', jisho: 'つくる', te: 'つくって', nai: 'つくらない', meaning: 'ပြုလုပ်သည်။တည်ဆောက်သည်။' },
-            { masu: 'しゅうりします', jisho: 'しゅうりする', te: 'しゅうりして', nai: 'しゅうりしない', meaning: 'ပြုပြင်သည်။ပြင်ဆင်သည်။' },
-            { masu: 'いいます', jisho: 'いう', te: 'いって', nai: 'いわない', meaning: 'ပြောသည်' },
-            { masu: 'きります', jisho: 'きる', te: 'きって', nai: 'きらない', meaning: 'ဖြတ်သည်။ညှပ်သည်။' },
-            { masu: 'わたります', jisho: 'わたる', te: 'わたって', nai: 'わたらない', meaning: 'ဖြတ်ကူးသည်' },
-            { masu: 'なります', jisho: 'なる', te: 'なって', nai: 'ならない', meaning: 'ဖြစ်သည်။ဖြစ်လာသည်။ကျရောက်သည်။' },
-            { masu: 'よみます', jisho: 'よむ', te: 'よんで', nai: 'よまない', meaning: 'ဖတ်သည်။' },
-            { masu: 'わすれます', jisho: 'わすれる', te: 'わすれて', nai: 'わすれない', meaning: 'မေ့သည်' },
-            { masu: 'たちます', jisho: 'たつ', te: 'たって', nai: 'たたない', meaning: 'မတ်တပ်ရပ်သည်' },
-            { masu: 'うんてんします', jisho: 'うんてんする', te: 'うんてんして', nai: 'うんてんしない', meaning: 'မောင်းနှင်သည်' },
-            { masu: 'けします', jisho: 'けす', te: 'けして', nai: 'けさない', meaning: 'မီးပိတ်သည်' },
-            { masu: 'つけます', jisho: 'つける', te: 'つけて', nai: 'つけない', meaning: 'မီးဖွင့်သည်' },
-            { masu: 'しょうかいします', jisho: 'しょうかいする', te: 'しょうかいして', nai: 'しょうかいしない', meaning: 'မိတ်ဆက်သည်' },
-            { masu: 'こぴーします', jisho: 'こぴーする', te: 'こぴーして', nai: 'こぴーしない', meaning: 'မိတ္တူကူးသည်' },
-            { masu: 'うまれます', jisho: 'うまれる', te: 'うまれて', nai: 'うまれない', meaning: 'မွေးဖွားလာသည်' },
-            { masu: 'おぼえます', jisho: 'おぼえる', te: 'おぼえて', nai: 'おぼえない', meaning: 'မှတ်မိသည်။မှတ်သည်။' },
-            { masu: 'とります', jisho: 'とる', te: 'とって', nai: 'とらない', meaning: 'ယူသည်' },
-            { masu: 'もっていきます', jisho: 'もっていく', te: 'もっていって', nai: 'もっていかない', meaning: 'ယူသွားသည်(သက်မဲ့ပစ္စည်း)' },
-            { masu: 'もってきます', jisho: 'もってくる', te: 'もってきて', nai: 'もってこない', meaning: 'ယူလာသည်(သက်မဲ့ပစ္စည်း)' },
-            { masu: 'とります', jisho: 'とる', te: 'とって', nai: 'とらない', meaning: 'ရသည်။ယူသည်။' },
-            { masu: 'およぎます', jisho: 'およぐ', te: 'およいで', nai: 'およがない', meaning: 'ရေကူးသည်' },
-            { masu: 'あびます', jisho: 'あびる', te: 'あびて', nai: 'あびない', meaning: 'ရေချိုးသည်' },
-            { masu: 'かきます', jisho: 'かく', te: 'かいて', nai: 'かかない', meaning: 'ရေးသည်' },
-            { masu: 'うります', jisho: 'うる', te: 'うって', nai: 'うらない', meaning: 'ရောင်းသည်' },
-            { masu: 'のります', jisho: 'のる', te: 'のって', nai: 'のらない', meaning: 'ရထားကို စီးသည်' },
-            { masu: 'おります', jisho: 'おりる', te: 'おりて', nai: 'おりない', meaning: 'ရထားပေါ်မှဆင်းသည်' },
-            { masu: 'ふります', jisho: 'ふる', te: 'ふって', nai: 'ふらない', meaning: 'ရွာသည်' },
-            { masu: 'しらべます', jisho: 'しらべる', te: 'しらべて', nai: 'しらべない', meaning: 'ရှာဖွေသည်။စစ်ဆေးသည်။' },
-            { masu: 'あります', jisho: 'ある', te: 'あって', nai: 'ない', meaning: 'ရှိသည် (သက်မဲ့)' },
-            { masu: 'います', jisho: 'いる', te: 'いて', nai: 'いない', meaning: 'ရှိသည် (သက်ရှိ)' },
-            { masu: 'まけます', jisho: 'まける', te: 'まけて', nai: 'まけない', meaning: 'ရှုံးနိမ့်သည်' },
-            { masu: 'あるきます', jisho: 'あるく', te: 'あるいて', nai: 'あるかない', meaning: 'လမ်းလျှောက်သည်။' },
-            { masu: 'きます', jisho: 'くる', te: 'きて', nai: 'こない', meaning: 'လာသည်' },
-            { masu: 'いります', jisho: 'いる', te: 'いって', nai: 'いらない', meaning: 'လိုအပ်သည်' },
-            { masu: 'あんないします', jisho: 'あんないする', te: 'あんないして', nai: 'あんないしない', meaning: 'လိုက်လံရှင်းပြသည်' },
-            { masu: 'かえます', jisho: 'かえる', te: 'かえて', nai: 'かえない', meaning: 'လဲလှယ်သည်။ဖလှယ်သည်။' },
-            { masu: 'べんきょうします', jisho: 'べんきょうする', te: 'べんきょうして', nai: 'べんきょうしない', meaning: 'လေ့လာသည်' },
-            { masu: 'いそぎます', jisho: 'いそぐ', te: 'いそいで', nai: 'いそがない', meaning: 'လောသည်။အလျင်စလိုလုပ်သည်။' },
-            { masu: 'すてます', jisho: 'すてる', te: 'すてて', nai: 'すてない', meaning: 'လွှင့်ပစ်သည်' },
-            { masu: 'かいます', jisho: 'かう', te: 'かって', nai: 'かわない', meaning: 'ဝယ်သည်' },
-            { masu: 'はいります', jisho: 'はいる', te: 'はいって', nai: 'はいらない', meaning: 'ဝင်သည်' },
-            { masu: 'きます', jisho: 'きる', te: 'きて', nai: 'きない', meaning: 'ဝတ်ဆင်သည်(ခါးအထက်ပိုင်း)' },
-            { masu: 'はきます', jisho: 'はく', te: 'はいて', nai: 'はかない', meaning: 'ဝတ်ဆင်သည်(ခါးအောက်ပိုင်း)' },
-            { masu: 'やすみます', jisho: 'やすむ', te: 'やすんで', nai: 'やすまない', meaning: 'အနားယူသည်' },
-            { masu: 'ざんぎょうします', jisho: 'ざんぎょうする', te: 'ざんぎょうして', nai: 'ざんぎょうしない', meaning: 'အလုပ်အချိန်ပိုဆင်းသည်' },
-            { masu: 'はたらきます', jisho: 'はたらく', te: 'はたらいて', nai: 'はたらかない', meaning: 'အလုပ်လုပ်သည်' },
-            { masu: 'つかいます', jisho: 'つかう', te: 'つかって', nai: 'つかわない', meaning: 'အသုံးပြုသည်' },
-            { masu: 'でかけます', jisho: 'でかける', te: 'でかけて', nai: 'でかけない', meaning: 'အပြင်ထွက်သည်' },
-            { masu: 'せんたくします', jisho: 'せんたくする', te: 'せんたくして', nai: 'せんたくしない', meaning: 'အဝတ်လျှော်သည်' },
-            { masu: 'ねます', jisho: 'ねる', te: 'ねて', nai: 'ねない', meaning: 'အိပ်သည်' },
-            { masu: 'おきます', jisho: 'おきる', te: 'おきて', nai: 'おきない', meaning: 'အိပ်ရာထသည်' }
-        ];
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let currentVerb;
-        let currentQuestionType;
-        let shuffledVerbs = [];
-        let currentUser = { name: '', level: '' };
-
-        // UI Elements
-        const userFormPanel = document.getElementById('user-form-panel');
-        const mainGameContainer = document.getElementById('main-game-container');
-        const userNameInput = document.getElementById('user-name-input');
-        const levelInput = document.getElementById('level-input');
-        const startGameBtn = document.getElementById('start-game-btn');
-
-        const scoreEl = document.getElementById('score');
-        const questionCountEl = document.getElementById('question-count');
-        const verbStartEl = document.getElementById('verb-start');
-        const formTypeEl = document.getElementById('form-type');
-        const verbMeaningEl = document.getElementById('verb-meaning');
-        const answerInput = document.getElementById('answer-input');
-        const feedbackEl = document.getElementById('feedback');
-        const checkBtn = document.getElementById('check-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const quizMainView = document.getElementById('quiz-main-view');
-        const endGameScreen = document.getElementById('end-game-screen');
-        const finalScoreEl = document.getElementById('final-score');
-        const scorePercentageEl = document.getElementById('score-percentage');
-        const restartBtn = document.getElementById('restart-btn');
-        const congratsMessageEl = document.getElementById('congrats-message');
-        const trophyIconEl = document.getElementById('trophy-icon');
-        const tabQuiz = document.getElementById('tab-quiz');
-        const tabGuide = document.getElementById('tab-guide');
-        const panelQuiz = document.getElementById('panel-quiz');
-        const panelGuide = document.getElementById('panel-guide');
-
-        const questionTypes = [
-            { start: 'masu', ask: 'te', ask_name: 'て形' },
-            { start: 'masu', ask: 'nai', ask_name: 'ない形' },
-            { start: 'masu', ask: 'jisho', ask_name: '辞書形' },
-            { start: 'jisho', ask: 'te', ask_name: 'て形' },
-            { start: 'jisho', ask: 'nai', ask_name: 'ない形' },
-            { start: 'jisho', ask: 'masu', ask_name: 'ます形' }
-        ];
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function initializeGame() {
-            currentUser.name = userNameInput.value.trim() || 'အမည်မသိ';
-            currentUser.level = levelInput.value.trim();
-
-            userFormPanel.classList.add('hidden');
-            mainGameContainer.classList.remove('hidden');
-
-            startGame();
-        }
-
-        function startGame() {
-            score = 0;
-            currentQuestionIndex = 0;
-            shuffledVerbs = shuffleArray([...verbs]);
-            scoreEl.textContent = score;
-            questionCountEl.textContent = `0 / ${verbs.length}`;
-
-            endGameScreen.classList.add('hidden');
-            quizMainView.classList.remove('hidden');
-
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            if (currentQuestionIndex >= verbs.length) {
-                endGame();
-                return;
-            }
-
-            currentVerb = shuffledVerbs[currentQuestionIndex];
-            currentQuestionType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-
-            verbStartEl.textContent = currentVerb[currentQuestionType.start];
-            formTypeEl.textContent = currentQuestionType.ask_name;
-            verbMeaningEl.textContent = `(${currentVerb.meaning})`;
-
-            questionCountEl.textContent = `${currentQuestionIndex + 1} / ${verbs.length}`;
-
-            answerInput.value = '';
-            answerInput.disabled = false;
-            answerInput.className = 'w-full p-4 text-lg border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200';
-            feedbackEl.textContent = '';
-
-            checkBtn.classList.remove('hidden');
-            nextBtn.classList.add('hidden');
-            answerInput.focus();
-        }
-
-        function checkAnswer() {
-            const userAnswer = answerInput.value.trim();
-            const correctAnswer = currentVerb[currentQuestionType.ask];
-
-            answerInput.disabled = true;
-            checkBtn.classList.add('hidden');
-            nextBtn.classList.remove('hidden');
-
-            if (userAnswer === correctAnswer) {
-                score++;
-                scoreEl.textContent = score;
-                answerInput.classList.add('correct');
-                feedbackEl.innerHTML = `<span class="feedback-correct">အဖြေမှန်! အဖြေမှန်မှာ: <strong>${correctAnswer}</strong></span>`;
-            } else {
-                answerInput.classList.add('incorrect');
-                feedbackEl.innerHTML = `<span class="feedback-incorrect">အဖြေမှား! အဖြေမှန်မှာ: <strong>${correctAnswer}</strong></span>`;
-            }
-
-            currentQuestionIndex++;
-        }
-
-        function endGame() {
-            quizMainView.classList.add('hidden');
-
-            const percentage = Math.round((score / verbs.length) * 100);
-
-            finalScoreEl.textContent = `${score} / ${verbs.length}`;
-            scorePercentageEl.textContent = `( ${percentage}% )`;
-
-            congratsMessageEl.textContent = `ဂုဏ်ယူပါတယ်, ${currentUser.name}!`;
-
-            if (percentage >= 80) {
-                trophyIconEl.textContent = '�';
-            } else if (percentage >= 50) {
-                trophyIconEl.textContent = '👍';
-            } else {
-                trophyIconEl.textContent = '💪';
-            }
-
-            endGameScreen.classList.remove('hidden');
-
-            // Trigger confetti
-            if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 150,
-                    spread: 90,
-                    origin: { y: 0.6 }
-                });
-            }
-        }
-
-        function resetToTitleScreen() {
-            mainGameContainer.classList.add('hidden');
-            userFormPanel.classList.remove('hidden');
-            userNameInput.value = '';
-            levelInput.value = '';
-        }
-
-        // Tab switching logic
-        tabQuiz.addEventListener('click', () => {
-            tabQuiz.classList.add('active');
-            tabGuide.classList.remove('active');
-            panelQuiz.classList.remove('hidden');
-            panelGuide.classList.add('hidden');
-        });
-
-        tabGuide.addEventListener('click', () => {
-            tabGuide.classList.add('active');
-            tabQuiz.classList.remove('active');
-            panelGuide.classList.remove('hidden');
-            panelQuiz.classList.add('hidden');
-        });
-
-        // Event Listeners
-        startGameBtn.addEventListener('click', initializeGame);
-        checkBtn.addEventListener('click', checkAnswer);
-        nextBtn.addEventListener('click', loadQuestion);
-        restartBtn.addEventListener('click', resetToTitleScreen);
-        answerInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter' && !checkBtn.classList.contains('hidden')) {
-                checkAnswer();
-            }
-        });
-
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
-�

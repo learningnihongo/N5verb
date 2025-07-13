@@ -1,0 +1,227 @@
+/* --- Theme Variables --- */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-input: #ffffff;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --primary-color: #3b82f6;
+    --secondary-color: #6c757d;
+    --accent-color: #ef4444;
+}
+
+.theme-dark {
+    --bg-primary: #1a202c;
+    --bg-secondary: #2d3748;
+    --bg-input: #4a5568;
+    --text-primary: #f7fafc;
+    --text-secondary: #a0aec0;
+    --border-color: #4a5568;
+    --primary-color: #63b3ed;
+    --secondary-color: #a0aec0;
+    --accent-color: #f56565;
+}
+
+.theme-sakura {
+    --bg-primary: #fff0f3;
+    --bg-secondary: #ffe5ea;
+    --bg-input: #ffffff;
+    --text-primary: #5c3c42;
+    --text-secondary: #8c6b73;
+    --border-color: #ffc2d1;
+    --primary-color: #ff748c;
+    --secondary-color: #ff8fab;
+    --accent-color: #e5627c;
+}
+
+/* --- Base Styles --- */
+body {
+    font-family: 'Padauk', sans-serif;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    touch-action: manipulation;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* --- Component Styles --- */
+.bg-card {
+    background-color: var(--bg-primary);
+}
+
+.bg-background {
+    background-color: var(--bg-secondary);
+}
+
+.bg-input {
+    background-color: var(--bg-input);
+}
+
+.text-text-primary {
+    color: var(--text-primary);
+}
+
+.text-text-secondary {
+    color: var(--text-secondary);
+}
+
+.border-border {
+    border-color: var(--border-color);
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-accent {
+    color: var(--accent-color);
+}
+
+.tab-btn {
+    transition: background-color 0.3s, color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-bottom-color: var(--accent-color);
+}
+
+.tab-btn:not(.active) {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    opacity: 0.9;
+}
+
+
+/* --- Guide Content Styles --- */
+.guide-content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.guide-content h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.guide-content table {
+    width: 100%;
+    min-width: 300px;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.guide-content th,
+.guide-content td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.guide-content th {
+    background-color: var(--bg-secondary);
+    font-weight: bold;
+}
+
+.guide-content .example {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.guide-content .rule {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 640px) {
+    #app-container {
+        padding: 0.5rem;
+    }
+
+    #main-game-container,
+    #user-form-panel {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        /* Smaller heading on mobile */
+    }
+
+    .tab-btn {
+        font-size: 0.75rem;
+        /* Smaller tab text */
+        padding: 0.75rem 0.2rem;
+        /* Adjust tab padding */
+    }
+
+    .tab-btn i {
+        margin-right: 4px;
+    }
+
+    #flashcard-container {
+        min-height: 120px;
+        padding: 1rem;
+    }
+
+    #flashcard-front p {
+        font-size: 1rem;
+    }
+
+    #flashcard-front strong {
+        font-size: 1.25rem;
+    }
+
+    #flashcard-back p {
+        font-size: 1.25rem;
+    }
+
+    #button-group button,
+    #restart-btn {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
