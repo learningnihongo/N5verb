@@ -173,20 +173,6 @@ main {
 
 /* --- Responsive Styles --- */
 @media (max-width: 640px) {
-    #app-container {
-        padding: 0.5rem;
-    }
-
-    #main-game-container,
-    #user-form-panel {
-        padding: 1rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-        /* Smaller heading on mobile */
-    }
-
     .tab-btn {
         font-size: 0.75rem;
         /* Smaller tab text */
