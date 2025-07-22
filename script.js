@@ -207,11 +207,11 @@ const quizTabs = document.querySelectorAll('.quiz-tab');
 const panelQuiz = document.getElementById('panel-quiz');
 const panelGuide = document.getElementById('panel-guide');
 
-const mixedQuestionTypes = [{ start: 'masu', ask: 'jisho', ask_name: '辞書形' }, { start: 'masu', ask: 'te', ask_name: 'て形' }, { start: 'masu', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'nai', ask_name: 'ない形' },];
-const plainQuestionTypes = [{ start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'ta', ask_name: 'た形' }, { start: 'nai', ask: 'jisho', ask_name: '辞書形' }, { start: 'te', ask: 'jisho', ask_name: '辞書形' },];
-const politeQuestionTypes = [{ start: 'masu', ask: 'masen', ask_name: 'Negative (ません)' }, { start: 'masu', ask: 'mashita', ask_name: 'Past (ました)' }, { start: 'masu', ask: 'masen_deshita', ask_name: 'Past Negative (ませんでした)' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' },];
+const mixedQuestionTypes = [ { start: 'masu', ask: 'jisho', ask_name: '辞書形' }, { start: 'masu', ask: 'te', ask_name: 'て形' }, { start: 'masu', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'nai', ask_name: 'ない形' }, ];
+const plainQuestionTypes = [ { start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'ta', ask_name: 'た形' }, { start: 'nai', ask: 'jisho', ask_name: '辞書形' }, { start: 'te', ask: 'jisho', ask_name: '辞書形' }, ];
+const politeQuestionTypes = [ { start: 'masu', ask: 'masen', ask_name: 'Negative (ません)' }, { start: 'masu', ask: 'mashita', ask_name: 'Past (ました)' }, { start: 'masu', ask: 'masen_deshita', ask_name: 'Past Negative (ませんでした)' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' }, ];
 
-function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } return array; }
+function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
 function applyTheme(theme) { document.body.className = `theme-${theme}`; localStorage.setItem('theme', theme); }
 
 function initializeGame() {
@@ -233,7 +233,7 @@ function switchPanel(panelName) {
         panelGuide.classList.remove('hidden');
     } else { // It's a quiz mode
         const activeTab = document.querySelector(`.quiz-tab[data-mode="${panelName}"]`);
-        if (activeTab) activeTab.classList.add('active');
+        if(activeTab) activeTab.classList.add('active');
         panelQuiz.classList.remove('hidden');
         setGameMode(panelName);
     }
@@ -241,7 +241,7 @@ function switchPanel(panelName) {
 
 function setGameMode(mode) {
     currentGameMode = mode;
-    switch (mode) {
+    switch(mode) {
         case 'plain': activeQuestionTypes = plainQuestionTypes; break;
         case 'polite': activeQuestionTypes = politeQuestionTypes; break;
         default: activeQuestionTypes = mixedQuestionTypes; break;
