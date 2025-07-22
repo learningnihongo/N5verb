@@ -152,7 +152,6 @@ const originalVerbs = [
     { masu: 'たります', jisho: 'たりる', te: 'たりて', nai: 'たりない', meaning: 'လုံလောက်သည်' }
 ];
 
-
 const verbs = originalVerbs.map(verb => {
     verb.masen = verb.masu.replace('ます', 'ません');
     verb.mashita = verb.masu.replace('ます', 'ました');
@@ -183,7 +182,6 @@ const userNameInput = document.getElementById('user-name-input');
 const levelInput = document.getElementById('level-input');
 const themeSelect = document.getElementById('theme-select');
 const startGameBtn = document.getElementById('start-game-btn');
-
 const scoreEl = document.getElementById('score');
 const questionCountEl = document.getElementById('question-count');
 const verbStartEl = document.getElementById('verb-start');
@@ -209,49 +207,41 @@ const quizTabs = document.querySelectorAll('.quiz-tab');
 const panelQuiz = document.getElementById('panel-quiz');
 const panelGuide = document.getElementById('panel-guide');
 
-// --- Question Type Definitions ---
-const mixedQuestionTypes = [
-    { start: 'masu', ask: 'jisho', ask_name: '辞書形' }, { start: 'masu', ask: 'te', ask_name: 'て形' },
-    { start: 'masu', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' },
-    { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'nai', ask_name: 'ない形' },
-];
-const plainQuestionTypes = [
-    { start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' },
-    { start: 'jisho', ask: 'ta', ask_name: 'た形' }, { start: 'nai', ask: 'jisho', ask_name: '辞書形' },
-    { start: 'te', ask: 'jisho', ask_name: '辞書形' },
-];
-const politeQuestionTypes = [
-    { start: 'masu', ask: 'masen', ask_name: 'Negative (ません)' }, { start: 'masu', ask: 'mashita', ask_name: 'Past (ました)' },
-    { start: 'masu', ask: 'masen_deshita', ask_name: 'Past Negative (ませんでした)' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' },
-];
+const mixedQuestionTypes = [{ start: 'masu', ask: 'jisho', ask_name: '辞書形' }, { start: 'masu', ask: 'te', ask_name: 'て形' }, { start: 'masu', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'nai', ask_name: 'ない形' },];
+const plainQuestionTypes = [{ start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'ta', ask_name: 'た形' }, { start: 'nai', ask: 'jisho', ask_name: '辞書形' }, { start: 'te', ask: 'jisho', ask_name: '辞書形' },];
+const politeQuestionTypes = [{ start: 'masu', ask: 'masen', ask_name: 'Negative (ません)' }, { start: 'masu', ask: 'mashita', ask_name: 'Past (ました)' }, { start: 'masu', ask: 'masen_deshita', ask_name: 'Past Negative (ませんでした)' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' },];
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function applyTheme(theme) {
-    document.body.className = `theme-${theme}`;
-    localStorage.setItem('theme', theme);
-}
+function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } return array; }
+function applyTheme(theme) { document.body.className = `theme-${theme}`; localStorage.setItem('theme', theme); }
 
 function initializeGame() {
     currentUser.name = userNameInput.value.trim() || 'အမည်မသိ';
     currentUser.level = levelInput.value.trim();
     applyTheme(themeSelect.value);
-
     userFormPanel.classList.add('hidden');
     mainGameContainer.classList.remove('hidden');
+    switchPanel('guide'); // Show guide by default
+}
 
-    setGameMode(currentGameMode);
+function switchPanel(panelName) {
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+    panelQuiz.classList.add('hidden');
+    panelGuide.classList.add('hidden');
+
+    if (panelName === 'guide') {
+        tabGuide.classList.add('active');
+        panelGuide.classList.remove('hidden');
+    } else { // It's a quiz mode
+        const activeTab = document.querySelector(`.quiz-tab[data-mode="${panelName}"]`);
+        if (activeTab) activeTab.classList.add('active');
+        panelQuiz.classList.remove('hidden');
+        setGameMode(panelName);
+    }
 }
 
 function setGameMode(mode) {
     currentGameMode = mode;
-    switch(mode) {
+    switch (mode) {
         case 'plain': activeQuestionTypes = plainQuestionTypes; break;
         case 'polite': activeQuestionTypes = politeQuestionTypes; break;
         default: activeQuestionTypes = mixedQuestionTypes; break;
@@ -265,29 +255,19 @@ function startGame() {
     shuffledVerbs = shuffleArray([...verbs]);
     scoreEl.textContent = score;
     questionCountEl.textContent = `0 / ${verbs.length}`;
-
     endGameScreen.classList.add('hidden');
-    panelGuide.classList.add('hidden');
-    panelQuiz.classList.remove('hidden');
     quizMainView.classList.remove('hidden');
-
     loadQuestion();
 }
 
 function loadQuestion() {
-    if (currentQuestionIndex >= verbs.length) {
-        endGame();
-        return;
-    }
-
+    if (currentQuestionIndex >= verbs.length) { endGame(); return; }
     flashcardFront.classList.remove('hidden');
     flashcardBack.classList.add('hidden');
     flipBtn.classList.remove('hidden');
     feedbackButtons.classList.add('hidden');
-
     currentVerb = shuffledVerbs[currentQuestionIndex];
     currentQuestionType = activeQuestionTypes[Math.floor(Math.random() * activeQuestionTypes.length)];
-
     verbStartEl.textContent = currentVerb[currentQuestionType.start];
     formTypeEl.textContent = currentQuestionType.ask_name;
     verbMeaningEl.textContent = `(${currentVerb.meaning})`;
@@ -303,10 +283,7 @@ function flipCard() {
 }
 
 function handleFeedback(isCorrect) {
-    if (isCorrect) {
-        score++;
-        scoreEl.textContent = score;
-    }
+    if (isCorrect) { score++; scoreEl.textContent = score; }
     currentQuestionIndex++;
     loadQuestion();
 }
@@ -317,7 +294,6 @@ function endGame() {
     finalScoreEl.textContent = `${score} / ${verbs.length}`;
     scorePercentageEl.textContent = `(${percentage}%)`;
     congratsMessageEl.textContent = `ဂုဏ်ယူပါတယ်, ${currentUser.name}!`;
-
     if (percentage >= 80) {
         trophyIconEl.textContent = '🏆';
         if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
@@ -340,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
     themeSelect.value = savedTheme;
     applyTheme(savedTheme);
 });
-
 themeSelect.addEventListener('change', (e) => applyTheme(e.target.value));
 startGameBtn.addEventListener('click', initializeGame);
 flipBtn.addEventListener('click', flipCard);
@@ -348,18 +323,7 @@ flashcardContainer.addEventListener('click', () => !flipBtn.classList.contains('
 correctBtn.addEventListener('click', () => handleFeedback(true));
 incorrectBtn.addEventListener('click', () => handleFeedback(false));
 restartBtn.addEventListener('click', resetToTitleScreen);
-
-tabGuide.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-    tabGuide.classList.add('active');
-    panelQuiz.classList.add('hidden');
-    panelGuide.classList.remove('hidden');
-});
-
+tabGuide.addEventListener('click', () => switchPanel('guide'));
 quizTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        setGameMode(tab.getAttribute('data-mode'));
-    });
+    tab.addEventListener('click', () => switchPanel(tab.getAttribute('data-mode')));
 });
