@@ -1,316 +1,348 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DATA ---
-    const verbsRaw = [
-        { hiragana: "おきる", meaning: "အိပ်ရာထသည်" }, { hiragana: "ねる", meaning: "အိပ်သည်" }, { hiragana: "はたらく", meaning: "အလုပ်လုပ်သည်" },
-        { hiragana: "やすむ", meaning: "အနားယူသည်" }, { hiragana: "べんきょうする", meaning: "လေ့လာသည်" }, { hiragana: "おわる", meaning: "ပြီးဆုံးသည်" },
-        { hiragana: "いく", meaning: "သွားသည်" }, { hiragana: "くる", meaning: "လာသည်" }, { hiragana: "かえる", meaning: "ပြန်သည်" },
-        { hiragana: "たべる", meaning: "စားသည်" }, { hiragana: "のむ", meaning: "သောက်သည်" }, { hiragana: "すう", meaning: "ရှူသည်" },
-        { hiragana: "みる", meaning: "ကြည့်သည်" }, { hiragana: "きく", meaning: "နားထောင်သည်/မေးသည်" }, { hiragana: "よむ", meaning: "ဖတ်သည်" },
-        { hiragana: "かく", meaning: "ရေးသည်" }, { hiragana: "かう", meaning: "ဝယ်သည်" }, { hiragana: "とる", meaning: "ရိုက်သည် (ဓာတ်ပုံ)" },
-        { hiragana: "する", meaning: "လုပ်သည်" }, { hiragana: "あう", meaning: "တွေ့ဆုံသည်" }, { hiragana: "きる", meaning: "ဖြတ်သည်" },
-        { hiragana: "おくる", meaning: "ပို့သည်" }, { hiragana: "あげる", meaning: "ပေးသည် (to others)" }, { hiragana: "もらう", meaning: "လက်ခံရယူသည်" },
-        { hiragana: "かす", meaning: "ချေးပေးသည်" }, { hiragana: "かりる", meaning: "ချေးယူသည်" }, { hiragana: "おしえる", meaning: "သင်ပေးသည်" },
-        { hiragana: "ならう", meaning: "သင်ယူသည်" }, { hiragana: "かける", meaning: "ဆက်သည် (ဖုန်း)" }, { hiragana: "わかる", meaning: "နားလည်သည်" },
-        { hiragana: "ある", meaning: "ရှိသည် (သက်မဲ့)" }, { hiragana: "いる", meaning: "ရှိသည် (သက်ရှိ)" }, { hiragana: "かかる", meaning: "ကြာသည်/ကုန်ကျသည်" },
-        { hiragana: "あそぶ", meaning: "ကစားသည်/လည်သည်" }, { hiragana: "およぐ", meaning: "ရေကူးသည်" }, { hiragana: "むかえる", meaning: "ကြိုဆိုသည်" },
-        { hiragana: "つかれる", meaning: "ပင်ပန်းသည်" }, { hiragana: "けっこんする", meaning: "လက်ထပ်သည်" }, { hiragana: "かいものする", meaning: "ဈေးဝယ်သည်" },
-        { hiragana: "しょくじする", meaning: "စားသောက်သည်" }, { hiragana: "さんぽする", meaning: "လမ်းလျှောက်သည်" }, { hiragana: "つける", meaning: "ဖွင့်သည် (မီး)" },
-        { hiragana: "けす", meaning: "ပိတ်သည် (မီး)" }, { hiragana: "あける", meaning: "ဖွင့်သည် (တံခါး)" }, { hiragana: "しめる", meaning: "ပိတ်သည် (တံခါး)" },
-        { hiragana: "いそぐ", meaning: "လောသည်" }, { hiragana: "まつ", meaning: "စောင့်သည်" }, { hiragana: "もつ", meaning: "ကိုင်သည်/ပိုင်ဆိုင်သည်" },
-        { hiragana: "てつだう", meaning: "ကူညီသည်" }, { hiragana: "よぶ", meaning: "ခေါ်သည်" }, { hiragana: "はなす", meaning: "စကားပြောသည်" },
-        { hiragana: "つかう", meaning: "သုံးသည်" }, { hiragana: "とめる", meaning: "ရပ်သည်" }, { hiragana: "みせる", meaning: "ပြသည်" },
-        { hiragana: "すわる", meaning: "ထိုင်သည်" }, { hiragana: "たつ", meaning: "မတ်တပ်ရပ်သည်" }, { hiragana: "はいる", meaning: "ဝင်သည်" },
-        { hiragana: "でる", meaning: "ထွက်သည်" }, { hiragana: "ふる", meaning: "ရွာသည် (မိုး)" }, { hiragana: "コピーする", meaning: "ကော်ပီကူးသည်" },
-        { hiragana: "おく", meaning: "ထားသည်" }, { hiragana: "つくる", meaning: "ပြုလုပ်သည်" }, { hiragana: "うる", meaning: "ရောင်းသည်" },
-        { hiragana: "しる", meaning: "သိသည်" }, { hiragana: "すむ", meaning: "နေထိုင်သည်" }, { hiragana: "けんきゅうする", meaning: "သုတေသနပြုသည်" },
-        { hiragana: "のる", meaning: "စီးသည်" }, { hiragana: "おりる", meaning: "ဆင်းသည်" }, { hiragana: "のりかえる", meaning: "ပြောင်းစီးသည်" },
-        { hiragana: "あびる", meaning: "ရေချိုးသည်" }, { hiragana: "いれる", meaning: "ထည့်သည်" }, { hiragana: "だす", meaning: "ထုတ်သည်" },
-        { hiragana: "おろす", meaning: "ထုတ်သည် (ငွေ)" }, { hiragana: "おす", meaning: "တွန်းသည်/နှိပ်သည်" }, { hiragana: "はじめる", meaning: "စတင်သည်" },
-        { hiragana: "けんがくする", meaning: "လေ့လာကြည့်ရှုသည်" }, { hiragana: "でんわする", meaning: "ဖုန်းဆက်သည်" }, { hiragana: "おぼえる", meaning: "မှတ်မိသည်" },
-        { hiragana: "わすれる", meaning: "မေ့သည်" }, { hiragana: "なくす", meaning: "ပျောက်ဆုံးသည်" }, { hiragana: "はらう", meaning: "ပေးချေသည်" },
-        { hiragana: "かえす", meaning: "ပြန်ပေးသည်" }, { hiragana: "でかける", meaning: "အပြင်ထွက်သည်" }, { hiragana: "ぬぐ", meaning: "ချွတ်သည်" },
-        { hiragana: "もっていく", meaning: "ယူသွားသည်" }, { hiragana: "もってくる", meaning: "ယူလာသည်" }, { hiragana: "しんぱいする", meaning: "စိတ်ပူသည်" },
-        { hiragana: "ざんぎょうする", meaning: "အချိန်ပိုဆင်းသည်" }, { hiragana: "しゅっちょうする", meaning: "ခရီးထွက်သည် (အလုပ်)" }, { hiragana: "できる", meaning: "လုပ်နိုင်သည်" },
-        { hiragana: "あらう", meaning: "ဆေးကြောသည်" }, { hiragana: "ひく", meaning: "တီးခတ်သည်" }, { hiragana: "うたう", meaning: "သီချင်းဆိုသည်" },
-        { hiragana: "あつめる", meaning: "စုဆောင်းသည်" }, { hiragana: "すてる", meaning: "လွှင့်ပစ်သည်" }, { hiragana: "かえる", meaning: "လဲလှယ်သည်" },
-        { hiragana: "うんてんする", meaning: "မောင်းနှင်သည်" }, { hiragana: "よやくする", meaning: "ကြိုတင်မှာသည်" }, { hiragana: "のぼる", meaning: "တက်သည်" },
-        { hiragana: "とまる", meaning: "တည်းခိုသည်" }, { hiragana: "そうじする", meaning: "သန့်ရှင်းရေးလုပ်သည်" }, { hiragana: "せんたくする", meaning: "အဝတ်လျှော်သည်" },
-        { hiragana: "なる", meaning: "ဖြစ်လာသည်" }, { hiragana: "いる", meaning: "လိုအပ်သည်" }, { hiragana: "しらべる", meaning: "ရှာဖွေသည်/စစ်ဆေးသည်" },
-        { hiragana: "しゅうりする", meaning: "ပြုပြင်သည်" }, { hiragana: "おもう", meaning: "ထင်သည်" }, { hiragana: "いう", meaning: "ပြောသည်" },
-        { hiragana: "かつ", meaning: "နိုင်သည်" }, { hiragana: "まける", meaning: "ရှုံးသည်" }, { hiragana: "やくにたつ", meaning: "အသုံးဝင်သည်" },
-        { hiragana: "うごく", meaning: "လှုပ်ရှားသည်" }, { hiragana: "やめる", meaning: "နှုတ်ထွက်သည်/ရပ်သည်" }, { hiragana: "きをつける", meaning: "သတိထားသည်" },
-        { hiragana: "りゅうがくする", meaning: "ပညာတော်သင်သွားသည်" }, { hiragana: "きる", meaning: "ဝတ်ဆင်သည်" }, { hiragana: "はく", meaning: "ဝတ်ဆင်သည် (အောက်ပိုင်း)" },
-        { hiragana: "かぶる", meaning: "ဆောင်းသည် (ဦးထုပ်)" }, { hiragana: "うまれる", meaning: "မွေးဖွားသည်" }, { hiragana: "まわす", meaning: "လှည့်သည်" },
-        { hiragana: "ひく", meaning: "ဆွဲသည်" }, { hiragana: "さわる", meaning: "ထိသည်" }, { hiragana: "あるく", meaning: "လမ်းလျှောက်သည်" },
-        { hiragana: "わたる", meaning: "ဖြတ်ကူးသည်" }, { hiragana: "まがる", meaning: "ချိုးကွေ့သည်" }, { hiragana: "くれる", meaning: "ပေးသည် (မိမိကို)" },
-        { hiragana: "なおす", meaning: "ပြင်သည်" }, { hiragana: "つれていく", meaning: "ခေါ်သွားသည်" }, { hiragana: "つれてくる", meaning: "ခေါ်လာသည်" },
-        { hiragana: "しょうかいする", meaning: "မိတ်ဆက်သည်" }, { hiragana: "あんないする", meaning: "လိုက်လံရှင်းပြသည်" }, { hiragana: "せつめいする", meaning: "ရှင်းပြသည်" },
-        { hiragana: "じゅんびをする", meaning: "ပြင်ဆင်သည်" }, { hiragana: "かんがえる", meaning: "စဉ်းစားသည်" }, { hiragana: "つく", meaning: "ဆိုက်ရောက်သည်" },
-        { hiragana: "たりる", meaning: "လုံလောက်သည်" }, { hiragana: "がんばる", meaning: "ကြိုးစားသည်" }
+    // prettier-ignore
+    const originalVerbs = [
+        { masu: 'おきます', jisho: 'おきる', te: 'おきて', nai: 'おきない', meaning: 'အိပ်ရာထသည်' },
+        { masu: 'ねます', jisho: 'ねる', te: 'ねて', nai: 'ねない', meaning: 'အိပ်သည်' },
+        { masu: 'はたらきます', jisho: 'はたらく', te: 'はたらいて', nai: 'はたらかない', meaning: 'အလုပ်လုပ်သည်' },
+        { masu: 'やすみます', jisho: 'やすむ', te: 'やすんで', nai: 'やすまない', meaning: 'အနားယူသည်' },
+        { masu: 'べんきょうします', jisho: 'べんきょうする', te: 'べんきょうして', nai: 'べんきょうしない', meaning: 'လေ့လာသည်။ ကျက်မှတ်သည်' },
+        { masu: 'おわります', jisho: 'おわる', te: 'おわって', nai: 'おわらない', meaning: 'ပြီးဆုံးသည်' },
+        { masu: 'いきます', jisho: 'いく', te: 'いって', nai: 'いかない', meaning: 'သွားသည်' },
+        { masu: 'きます', jisho: 'くる', te: 'きて', nai: 'こない', meaning: 'လာသည်' },
+        { masu: 'たべます', jisho: 'たべる', te: 'たべて', nai: 'たべない', meaning: 'စားသည်' },
+        { masu: 'のみます', jisho: 'のむ', te: 'のんで', nai: 'のまない', meaning: 'သောက်သည်။ (ရေ၊ အရက်)' },
+        { masu: 'すいます', jisho: 'すう', te: 'すって', nai: 'すわない', meaning: 'ရှူသည်။ (ဆေးလိပ်)' },
+        { masu: 'みます', jisho: 'みる', te: 'みて', nai: 'みない', meaning: 'ကြည့်သည်' },
+        { masu: 'ききます', jisho: 'きく', te: 'きいて', nai: 'きかない', meaning: 'နားထောင်သည်။ မေးမြန်းသည်' },
+        { masu: 'よみます', jisho: 'よむ', te: 'よんで', nai: 'よまない', meaning: 'ဖတ်သည်' },
+        { masu: 'かきます', jisho: 'かく', te: 'かいて', nai: 'かかない', meaning: 'ရေးသည်။ ရေးဆွဲသည်' },
+        { masu: 'かいます', jisho: 'かう', te: 'かって', nai: 'かわない', meaning: 'ဝယ်သည်' },
+        { masu: 'とります', jisho: 'とる', te: 'とって', nai: 'とらない', meaning: 'ရိုက်သည်။ (ဓာတ်ပုံ)' },
+        { masu: 'します', jisho: 'する', te: 'して', nai: 'しない', meaning: 'လုပ်ဆောင်သည်။လုပ်သည်' },
+        { masu: 'あいます', jisho: 'あう', te: 'あって', nai: 'あわない', meaning: 'တွေ့ဆုံသည်' },
+        { masu: 'きります', jisho: 'きる', te: 'きって', nai: 'きらない', meaning: 'ဖြတ်သည်၊ လှီးသည်' },
+        { masu: 'おくります', jisho: 'おくる', te: 'おくって', nai: 'おくらない', meaning: 'ပို့သည်။ (ပစ္စည်း)' },
+        { masu: 'あげます', jisho: 'あげる', te: 'あげて', nai: 'あげない', meaning: 'ပေးသည်။ (တခြားသူကို)' },
+        { masu: 'もらいます', jisho: 'もらう', te: 'もらって', nai: 'もらわない', meaning: 'လက်ခံရယူသည်' },
+        { masu: 'かします', jisho: 'かす', te: 'かして', nai: 'かさない', meaning: 'ချေးပေးသည်။ (တခြားသူကို)' },
+        { masu: 'かります', jisho: 'かりる', te: 'かりて', nai: 'かりない', meaning: 'ချေးယူသည်။ (မိမိက)' },
+        { masu: 'おしえます', jisho: 'おしえる', te: 'おしえて', nai: 'おしえない', meaning: 'သင်ပေးသည်။ (တခြားသူကို)' },
+        { masu: 'ならいます', jisho: 'ならう', te: 'ならって', nai: 'ならわない', meaning: 'သင်ယူသည်။ (မိမိက)' },
+        { masu: 'かけます', jisho: 'かける', te: 'かけて', nai: 'かけない', meaning: 'ဆက်သည်။ (တယ်လီဖုန်း)' },
+        { masu: 'わかります', jisho: 'わかる', te: 'わかって', nai: 'わからない', meaning: 'နားလည်သည်။ သဘောပေါက်သည်' },
+        { masu: 'あります', jisho: 'ある', te: 'あって', nai: 'ない', meaning: 'ရှိသည်။ (သက်မဲ့)' },
+        { masu: 'います', jisho: 'いる', te: 'いて', nai: 'いない', meaning: 'ရှိသည်။ (သက်ရှိ)' },
+        { masu: 'かかります', jisho: 'かかる', te: 'かかって', nai: 'かからない', meaning: 'ကြာသည်။ ကုန်ကျသည်။ (အချိန်၊ ငွေ)' },
+        { masu: 'やすみます', jisho: 'やすむ', te: 'やすんで', nai: 'やすまない', meaning: 'အနားယူသည်' },
+        { masu: 'あそびます', jisho: 'あそぶ', te: 'あそんで', nai: 'あそばない', meaning: 'လျှောက်လည်သည်။ ကစားသည်' },
+        { masu: 'およぎます', jisho: 'およぐ', te: 'およいで', nai: 'およがない', meaning: 'ရေကူးသည်' },
+        { masu: 'むかえます', jisho: 'むかえる', te: 'むかえて', nai: 'むかえない', meaning: 'ကြိုဆိုသည်' },
+        { masu: 'つかれます', jisho: 'つかれる', te: 'つかれて', nai: 'つかれない', meaning: 'ပင်ပန်းသည်' },
+        { masu: 'けっこんします', jisho: 'けっこんする', te: 'けっこんして', nai: 'けっこんしない', meaning: 'လက်ထပ်သည်။ မင်္ဂလာဆောင်သည်' },
+        { masu: 'かいものします', jisho: 'かいものする', te: 'かいものして', nai: 'かいものしない', meaning: 'ဈေးဝယ်သည်' },
+        { masu: 'しょくじします', jisho: 'しょくじする', te: 'しょくじして', nai: 'しょくじしない', meaning: 'စားသောက်သည်။ ထမင်းစားသည်' },
+        { masu: 'さんぽします', jisho: 'さんぽする', te: 'さんぽして', nai: 'さんぽしない', meaning: 'လမ်းလျှောက်သည်' },
+        { masu: 'つけます', jisho: 'つける', te: 'つけて', nai: 'つけない', meaning: 'ဖွင့်သည်။ (မီး၊ aircon)' },
+        { masu: 'けします', jisho: 'けす', te: 'けして', nai: 'けさない', meaning: 'ပိတ်သည်။ (မီး၊ aircon)' },
+        { masu: 'あけます', jisho: 'あける', te: 'あけて', nai: 'あけない', meaning: 'ဖွင့်သည်။ (တံခါး၊ ပြတင်းပေါက်)' },
+        { masu: 'しめます', jisho: 'しめる', te: 'しめて', nai: 'しめない', meaning: 'ပိတ်သည်။ (တံခါး၊ ပြတင်းပေါက်)' },
+        { masu: 'いそぎます', jisho: 'いそぐ', te: 'いそいで', nai: 'いそがない', meaning: 'လောသည်။ အလျင်စလိုလုပ်သည်' },
+        { masu: 'まちます', jisho: 'まつ', te: 'まって', nai: 'またない', meaning: 'စောင့်သည်' },
+        { masu: 'もちます', jisho: 'もつ', te: 'もって', nai: 'もたない', meaning: 'ပိုင်ဆိုင်သည်။ သယ်ယူသည်။ ကိုင်ထားသည်' },
+        { masu: 'とります', jisho: 'とる', te: 'とって', nai: 'とらない', meaning: 'ယူသည်' },
+        { masu: 'てつだいます', jisho: 'てつだう', te: 'てつだって', nai: 'てつだわない', meaning: 'ကူညီသည်' },
+        { masu: 'よびます', jisho: 'よぶ', te: 'よんで', nai: 'よばない', meaning: 'ခေါ်သည်။ (Taxi)' },
+        { masu: 'はなします', jisho: 'はなす', te: 'はなして', nai: 'はなさない', meaning: 'စကားပြောသည်' },
+        { masu: 'つかいます', jisho: 'つかう', te: 'つかって', nai: 'つかわない', meaning: 'သုံးသည်။အသုံးပြုသည်' },
+        { masu: 'とめます', jisho: 'とめる', te: 'とめて', nai: 'とめない', meaning: 'ရပ်သည်။ တားသည်။ (ကား)' },
+        { masu: 'みせます', jisho: 'みせる', te: 'みせて', nai: 'みせない', meaning: 'ပြသည်' },
+        { masu: 'おしえます', jisho: 'おしえる', te: 'おしえて', nai: 'おしえない', meaning: 'ပြောပြသည်။ (လိပ်စာ)' },
+        { masu: 'すわります', jisho: 'すわる', te: 'すわって', nai: 'すわらない', meaning: 'ထိုင်သည်' },
+        { masu: 'たちます', jisho: 'たつ', te: 'たって', nai: 'たたない', meaning: 'မတ်တပ်ရပ်သည်' },
+        { masu: 'はいります', jisho: 'はいる', te: 'はいって', nai: 'はいらない', meaning: 'ဝင်သည်။ (လက်ဖက်ရည်ဆိုင်သို့)' },
+        { masu: 'でます', jisho: 'でる', te: 'でて', nai: 'でない', meaning: 'ထွက်သည်။ (လက်ဖက်ရည်ဆိုင်မှ)' },
+        { masu: 'ふります', jisho: 'ふる', te: 'ふって', nai: 'ふらない', meaning: 'ရွာသည်။ (မိုး)' },
+        { masu: 'コピーします', jisho: 'コピーする', te: 'コピーして', nai: 'コピーしない', meaning: 'ကော်ပီကူးသည်' },
+        { masu: 'おきます', jisho: 'おく', te: 'おいて', nai: 'おかない', meaning: 'ထားသည်' },
+        { masu: 'つくります', jisho: 'つくる', te: 'つくって', nai: 'つくらない', meaning: 'ပြုလုပ်သည်။တည်ဆောက်သည်' },
+        { masu: 'うります', jisho: 'うる', te: 'うって', nai: 'うらない', meaning: 'ရောင်းသည်' },
+        { masu: 'しります', jisho: 'しる', te: 'しって', nai: 'しらない', meaning: 'သိသည်' },
+        { masu: 'すみます', jisho: 'すむ', te: 'すんで', nai: 'すまない', meaning: 'နေထိုင်သည်' },
+        { masu: 'けんきゅうします', jisho: 'けんきゅうする', te: 'けんきゅうして', nai: 'けんきゅうしない', meaning: 'သုတေသနပြုသည်' },
+        { masu: 'のります', jisho: 'のる', te: 'のって', nai: 'のらない', meaning: 'စီးသည်။ (ရထား၊ ကား)' },
+        { masu: 'おります', jisho: 'おりる', te: 'おりて', nai: 'おりない', meaning: 'ဆင်းသည်။ (ရထား၊ ကားမှ)' },
+        { masu: 'のりかえます', jisho: 'のりかえる', te: 'のりかえて', nai: 'のりかえない', meaning: 'ပြောင်းစီးသည်' },
+        { masu: 'あびます', jisho: 'あびる', te: 'あびて', nai: 'あびない', meaning: 'ရေချိုးသည်။' },
+        { masu: 'いれます', jisho: 'いれる', te: 'いれて', nai: 'いれない', meaning: 'သွင်းသည်' },
+        { masu: 'だします', jisho: 'だす', te: 'だして', nai: 'ださない', meaning: 'ထုတ်သည်။ထပ်သည်။တင်သည်' },
+        { masu: 'おろします', jisho: 'おろす', te: 'おろして', nai: 'おろさない', meaning: 'ထုတ်သည်။ (ငွေ)' },
+        { masu: 'はいります', jisho: 'はいる', te: 'はいって', nai: 'はいらない', meaning: 'ဝင်သည်။ (တက္ကသိုလ်သို့)' },
+        { masu: 'でます', jisho: 'でる', te: 'でて', nai: 'でない', meaning: 'ထွက်သည်။ဘွဲ့ရသည်။ (တက္ကသိုလ်မှ)' },
+        { masu: 'おします', jisho: 'おす', te: 'おして', nai: 'おさない', meaning: 'တွန်းသည်။ ဖိသည်။နှိပ်သည်' },
+        { masu: 'のみます', jisho: 'のむ', te: 'のんで', nai: 'のまない', meaning: 'သောက်သည်' },
+        { masu: 'はじめます', jisho: 'はじめる', te: 'はじめて', nai: 'はじめない', meaning: 'စတင်သည်' },
+        { masu: 'けんがくします', jisho: 'けんがくする', te: 'けんがくして', nai: 'けんがくしない', meaning: 'ကြည့်ရှုလေ့လာသည်' },
+        { masu: 'でんわします', jisho: 'でんわする', te: 'でんわして', nai: 'でんわしない', meaning: 'တယ်လီဖုန်းဆက်သည်' },
+        { masu: 'おぼえます', jisho: 'おぼえる', te: 'おぼえて', nai: 'おぼえない', meaning: 'မှတ်မိသည်' },
+        { masu: 'わすれます', jisho: 'わすれる', te: 'わすれて', nai: 'わすれない', meaning: 'မေ့သည်' },
+        { masu: 'なくします', jisho: 'なくす', te: 'なくして', nai: 'なくさない', meaning: 'ပျောက်ဆုံးသည်' },
+        { masu: 'はらいます', jisho: 'はらう', te: 'はらって', nai: 'はらわない', meaning: 'ပေးချေသည်။ ပေးဆောင်သည်' },
+        { masu: 'かえします', jisho: 'かえす', te: 'かえして', nai: 'かえさない', meaning: 'ပြန်ပေးသည်' },
+        { masu: 'でかけます', jisho: 'でかける', te: 'でかけて', nai: 'でかけない', meaning: 'အပြင်ထွက်သည်' },
+        { masu: 'ぬぎます', jisho: 'ぬぐ', te: 'ぬいで', nai: 'ぬがない', meaning: 'ချွတ်သည်။ (အဝတ်အစား)' },
+        { masu: 'もっていきます', jisho: 'もっていく', te: 'もっていって', nai: 'もっていかない', meaning: 'ယူသွားသည်။ (သက်မဲ့ပစ္စည်း)' },
+        { masu: 'もってきます', jisho: 'もってくる', te: 'もってきて', nai: 'もってこない', meaning: 'ယူလာသည်။ (သက်မဲ့ပစ္စည်း)' },
+        { masu: 'しんぱいします', jisho: 'しんぱいする', te: 'しんぱいして', nai: 'しんぱいしない', meaning: 'စိတ်ပူသည်' },
+        { masu: 'ざんぎょうします', jisho: 'ざんぎょうする', te: 'ざんぎょうして', nai: 'ざんぎょうしない', meaning: 'အလုပ်အချိန်ပိုဆင်းသည်' },
+        { masu: 'しゅっちょうします', jisho: 'しゅっちょうする', te: 'しゅっちょうして', nai: 'しゅっちょうしない', meaning: 'တာဝန်ဖြင့် ခရီးထွက်သည်' },
+        { masu: 'のみます', jisho: 'のむ', te: 'のんで', nai: 'のまない', meaning: 'သောက်သည်။ (ဆေး)' },
+        { masu: 'できます', jisho: 'できる', te: 'できて', nai: 'できない', meaning: 'လုပ်နိုင်သည်။လုပ်တက်သည်။ပေါ်ပေါက်လာသည်' },
+        { masu: 'あらいます', jisho: 'あらう', te: 'あらって', nai: 'あらわない', meaning: 'ဆေးကြောသည်' },
+        { masu: 'ひきます', jisho: 'ひく', te: 'ひいて', nai: 'ひかない', meaning: 'တီးခတ်သည်။ (ဂီတာ၊ စန္ဒရား)' },
+        { masu: 'うたいます', jisho: 'うたう', te: 'うたって', nai: 'うたわない', meaning: 'သီချင်းဆိုသည်' },
+        { masu: 'あつめます', jisho: 'あつめる', te: 'あつめて', nai: 'あつめない', meaning: 'စုဆောင်းသည်။' },
+        { masu: 'すてます', jisho: 'すてる', te: 'すてて', nai: 'すてない', meaning: 'လွှင့်ပစ်သည်' },
+        { masu: 'かえます', jisho: 'かえる', te: 'かえて', nai: 'かえない', meaning: 'လဲလှယ်သည်။ဖလှယ်သည်' },
+        { masu: 'うんてんします', jisho: 'うんてんする', te: 'うんてんして', nai: 'うんてんしない', meaning: 'မောင်းနှင်သည်' },
+        { masu: 'よやくします', jisho: 'よやくする', te: 'よやくして', nai: 'よやくしない', meaning: 'ကြိုတင်မှာသည်။ (Booking)' },
+        { masu: 'のぼります', jisho: 'のぼる', te: 'のぼって', nai: 'のぼらない', meaning: 'တက်သည်။ (တောင်)' },
+        { masu: 'とまります', jisho: 'とまる', te: 'とまって', nai: 'とまらない', meaning: 'တည်းခိုသည်' },
+        { masu: 'そうじします', jisho: 'そうじする', te: 'そうじして', nai: 'そうじしない', meaning: 'သန့်ရှင်းရေးလုပ်သည်' },
+        { masu: 'せんたくします', jisho: 'せんたくする', te: 'せんたくして', nai: 'せんたくしない', meaning: 'အဝတ်လျှော်သည်' },
+        { masu: 'なります', jisho: 'なる', te: 'なって', nai: 'ならない', meaning: 'ဖြစ်သည်။ဖြစ်လာသည်' },
+        { masu: 'いります', jisho: 'いる', te: 'いって', nai: 'いらない', meaning: 'လိုအပ်သည်' },
+        { masu: 'しらべます', jisho: 'しらべる', te: 'しらべて', nai: 'しらべない', meaning: 'ရှာဖွေသည်။ စစ်ဆေးသည်' },
+        { masu: 'しゅうりします', jisho: 'しゅうりする', te: 'しゅうりして', nai: 'しゅうりしない', meaning: 'ပြုပြင်သည်' },
+        { masu: 'おもいます', jisho: 'おもう', te: 'おもって', nai: 'おもわない', meaning: 'ထင်မြင်သည်။ တွေးတောသည်' },
+        { masu: 'いいます', jisho: 'いう', te: 'いって', nai: 'いわない', meaning: 'ပြောသည်' },
+        { masu: 'かちます', jisho: 'かつ', te: 'かって', nai: 'かたない', meaning: 'နိုင်သည်' },
+        { masu: 'まけます', jisho: 'まける', te: 'まけて', nai: 'まけない', meaning: 'ရှုံးနိမ့်သည်' },
+        { masu: 'あります', jisho: 'ある', te: 'あって', nai: 'ない', meaning: 'ရှိသည်' },
+        { masu: 'やくにたちます', jisho: 'やくにたつ', te: 'やくにたって', nai: 'やくにたたない', meaning: 'အသုံးဝင်သည်။အထောက်အကူပြုသည်' },
+        { masu: 'うごきます', jisho: 'うごく', te: 'うごいて', nai: 'うごかない', meaning: 'လှုပ်ရှားသည်။ လည်ပတ်သည်' },
+        { masu: 'やめます', jisho: 'やめる', te: 'やめて', nai: 'やめない', meaning: 'နှုတ်ထွက်သည်' },
+        { masu: 'きをつけます', jisho: 'きをつける', te: 'きをつけて', nai: 'きをつけない', meaning: 'သတိထားသည်' },
+        { masu: 'りゅうがくします', jisho: 'りゅうがくする', te: 'りゅうがくして', nai: 'りゅうがくしない', meaning: 'နိုင်ငံခြားပညာတော်သင်သွားသည်' },
+        { masu: 'きます', jisho: 'きる', te: 'きて', nai: 'きない', meaning: 'ဝတ်ဆင်သည်။ (ခါးအထက်ပိုင်းဝတ်ဆင်ရာတွင်သုံးသည်)' },
+        { masu: 'はきます', jisho: 'はく', te: 'はいて', nai: 'はかない', meaning: 'ဝတ်ဆင်သည်။စွပ်သည်။ (ခါးအောက်ပိုင်း)' },
+        { masu: 'かぶります', jisho: 'かぶる', te: 'かぶって', nai: 'かぶらない', meaning: 'ဆောင်းသည်။ (ဦးထုပ်)' },
+        { masu: 'かけます', jisho: 'かける', te: 'かけて', nai: 'かけない', meaning: 'တပ်သည်။ချိတ်သည်။ (မျက်မှန်)' },
+        { masu: 'します', jisho: 'する', te: 'して', nai: 'しない', meaning: 'လုပ်ဆောင်သည်' },
+        { masu: 'うまれます', jisho: 'うまれる', te: 'うまれて', nai: 'うまれない', meaning: 'မွေးဖွားသည်' },
+        { masu: 'ききます', jisho: 'きく', te: 'きいて', nai: 'きかない', meaning: 'မေးသည်' },
+        { masu: 'まわします', jisho: 'まわす', te: 'まわして', nai: 'まわさない', meaning: 'လှည့်သည်' },
+        { masu: 'ひきます', jisho: 'ひく', te: 'ひいて', nai: 'ひかない', meaning: 'ဆွဲထုတ်ယူသည်' },
+        { masu: 'かえます', jisho: 'かえる', te: 'かえて', nai: 'かえない', meaning: 'လဲလှယ်သည်။ ပြောင်းသည်' },
+        { masu: 'さわります', jisho: 'さわる', te: 'さわって', nai: 'さわらない', meaning: 'ကိုင်သည်။ ထိသည်' },
+        { masu: 'でます', jisho: 'でる', te: 'でて', nai: 'でない', meaning: 'ထွက်သည်။ (အကြွေ)' },
+        { masu: 'あるきます', jisho: 'あるく', te: 'あるいて', nai: 'あるかない', meaning: 'လမ်းလျှောက်သည်' },
+        { masu: 'わたります', jisho: 'わたる', te: 'わたって', nai: 'わたらない', meaning: 'ဖြတ်ကူးသည်။ (တံတားကို)' },
+        { masu: 'まがります', jisho: 'まがる', te: 'まがって', nai: 'まがらない', meaning: 'ချိုးကွေ့သည်။ (ညာသို့)' },
+        { masu: 'くれます', jisho: 'くれる', te: 'くれて', nai: 'くれない', meaning: 'ပေးသည်။ (မိမိအား)' },
+        { masu: 'なおします', jisho: 'なおす', te: 'なおして', nai: 'なおさない', meaning: 'အမှားပြင်သည်။ပြင်ပေးသည်' },
+        { masu: 'つれていきます', jisho: 'つれていく', te: 'つれていって', nai: 'つれていかない', meaning: 'ခေါ်သွားသည်။ လူ သို့မဟုတ် တိရစ္ဆာန်ကို အတူတကွ ခေါ်ဆောင်ပြီး နေရာတစ်ခုသို့ သွားခြင်း။' },
+        { masu: 'つれてきます', jisho: 'つれてくる', te: 'つれてきて', nai: 'つれてこない', meaning: 'ခေါ်လာသည်။' },
+        { masu: 'おくります', jisho: 'おくる', te: 'おくって', nai: 'おくらない', meaning: 'လိုက်လံပို့ဆောင်သည်' },
+        { masu: 'しょうかいします', jisho: 'しょうかいする', te: 'しょうかいして', nai: 'しょうかいしない', meaning: 'မိတ်ဆက်သည်' },
+        { masu: 'あんないします', jisho: 'あんないする', te: 'あんないして', nai: 'あんないしない', meaning: 'လိုက်လံရှင်းပြသည်' },
+        { masu: 'せつめいします', jisho: 'せつめいする', te: 'せつめいして', nai: 'せつめいしない', meaning: 'ရှင်းပြသည်။' },
+        { masu: 'じゅんびをします', jisho: 'じゅんびをする', te: 'じゅんびをして', nai: 'じゅんびをしない', meaning: 'ကြိုတင်ပြင်ဆင်သည်' },
+        { masu: 'かんがえます', jisho: 'かんがえる', te: 'かんがえて', nai: 'かんがえない', meaning: 'စဉ်းစားသည်။ တွေးခေါ်သည်' },
+        { masu: 'つきます', jisho: 'つく', te: 'ついて', nai: 'つかない', meaning: 'ဆိုက်ရောက်သည်' },
+        { masu: 'とります', jisho: 'とる', te: 'とって', nai: 'とらない', meaning: 'ရသည်။ယူသည်။ (အသက်- ရသည်။)' },
+        { masu: 'たります', jisho: 'たりる', te: 'たりて', nai: 'たりない', meaning: 'လုံလောက်သည်' }
     ];
-    const iAdjectivesRaw = [
-        { dict: 'おおきい', meaning: 'ကြီးသော' }, { dict: 'ちいさい', meaning: 'သေးငယ်သော' }, { dict: 'あたらしい', meaning: 'အသစ်ဖြစ်သော' },
-        { dict: 'ふるい', meaning: 'ဟောင်းသော' }, { dict: 'いい', meaning: 'ကောင်းသော' }, { dict: 'わるい', meaning: 'ဆိုးသော' },
-        { dict: 'あつい', meaning: 'ပူသော' }, { dict: 'さむい', meaning: 'ချမ်းသော' }, { dict: 'つめたい', meaning: 'အေးသော' },
-        { dict: 'むずかしい', meaning: 'ခက်ခဲသော' }, { dict: 'やさしい', meaning: 'လွယ်ကူသော' }, { dict: 'たかい', meaning: 'မြင့်သော/ဈေးကြီးသော' },
-        { dict: 'やすい', meaning: 'ဈေးပေါသော' }, { dict: 'ひくい', meaning: 'နိမ့်သော' }, { dict: 'おもしろい', meaning: 'စိတ်ဝင်စားဖွယ်ကောင်းသော' },
-        { dict: 'おいしい', meaning: 'အရသာရှိသော' }, { dict: 'いそがしい', meaning: 'အလုပ်များသော' }, { dict: 'たのしい', meaning: 'ပျော်ရွှင်သော' },
-        { dict: 'しろい', meaning: 'အဖြူရောင်' }, { dict: 'くろい', meaning: 'အနက်ရောင်' }, { dict: 'あかい', meaning: 'အနီရောင်' },
-        { dict: 'あおい', meaning: 'အပြာရောင်' }, { dict: 'ちかい', meaning: 'နီးသော' }, { dict: 'とおい', meaning: 'ဝေးသော' },
-        { dict: 'はやい', meaning: 'မြန်သော' }, { dict: 'おそい', meaning: 'နှေးသော' }, { dict: 'おおい', meaning: 'များသော' },
-        { dict: 'すくない', meaning: 'နည်းသော' }, { dict: 'あたたかい', meaning: 'နွေးထွေးသော' }, { dict: 'すずしい', meaning: 'အေးမြသော' },
-        { dict: 'あまい', meaning: 'ချိုသော' }, { dict: 'からい', meaning: 'စပ်သော' }, { dict: 'おもい', meaning: 'လေးသော' },
-        { dict: 'かるい', meaning: 'ပေါ့သော' }, { dict: 'ほしい', meaning: 'လိုချင်သော' }, { dict: 'ひろい', meaning: 'ကျယ်သော' },
-        { dict: 'せまい', meaning: 'ကျဉ်းသော' }, { dict: 'わかい', meaning: 'ငယ်ရွယ်သော' }, { dict: 'ながい', meaning: 'ရှည်သော' },
-        { dict: 'みじかい', meaning: 'တိုသော' }, { dict: 'あかるい', meaning: 'လင်းသော' }, { dict: 'くらい', meaning: 'မှောင်သော' },
-        { dict: 'あぶない', meaning: 'အန္တရာယ်ရှိသော' }, { dict: 'ねむい', meaning: 'အိပ်ငိုက်သော' }, { dict: 'つよい', meaning: 'အားကောင်းသော' },
-        { dict: 'よわい', meaning: 'အားနည်းသော' }
-    ];
-    const nAdjectivesRaw = [
-        { dict: 'ハンサム', meaning: 'ခန့်ညားသော' }, { dict: 'きれい', meaning: 'လှပသော' }, { dict: 'しずか', meaning: 'တိတ်ဆိတ်သော' },
-        { dict: 'にぎやか', meaning: 'စည်ကားသော' }, { dict: 'ゆうめい', meaning: 'ကျော်ကြားသော' }, { dict: 'しんせつ', meaning: 'ကြင်နာသော' },
-        { dict: 'げんき', meaning: 'ကျန်းမာသော' }, { dict: 'ひま', meaning: 'အားလပ်သော' }, { dict: 'べんり', meaning: 'အဆင်ပြေသော' },
-        { dict: 'すてき', meaning: 'ကောင်းမွန်သော' }, { dict: 'すき', meaning: 'ကြိုက်သော' }, { dict: 'きらい', meaning: 'မုန်းသော' },
-        { dict: 'じょうず', meaning: 'တော်သော' }, { dict: 'へた', meaning: 'ညံ့သော' }, { dict: 'いろいろ', meaning: 'အမျိုးမျိုး' },
-        { dict: 'かんたん', meaning: 'လွယ်ကူသော' }, { dict: 'たいへん', meaning: 'ခက်ခဲပင်ပန်းသော' }, { dict: 'たいせつ', meaning: 'အရေးကြီးသော' },
-        { dict: 'だいじょうぶ', meaning: 'အဆင်ပြေသော' }
-    ];
 
-    // --- DATA PROCESSING ---
-    const processVerb = (verb) => {
-        const jisho = verb.hiragana;
-        const last = jisho.slice(-1);
-        const stem = jisho.slice(0, -1);
-        let group, masu, nai, te;
-
-        const isGroup2Ichidan = (v) => {
-            if (!v.endsWith('る')) return false;
-            const preStem = v.slice(0, -1);
-            if (!preStem) return false;
-            const preChar = preStem.slice(-1);
-            const exceptions = ['はいる', 'はしる', 'しる', 'いる', 'ちる', 'きる', 'かえる', 'ける', 'へる', 'ひねる'];
-            if (exceptions.includes(v)) return false;
-            return 'いえ'.includes(preChar);
-        };
-
-        if (jisho === 'する' || jisho.endsWith('する')) group = 3;
-        else if (jisho === 'くる' || jisho.includes('くる')) group = 3;
-        else if (isGroup2Ichidan(jisho)) group = 2;
-        else group = 1;
-
-        if (group === 3) {
-            const noun = jisho.replace('する', '').replace('くる', '');
-            masu = noun + (jisho.includes('くる') ? 'きます' : 'します');
-            nai = noun + (jisho.includes('くる') ? 'こない' : 'しない');
-            te = noun + (jisho.includes('くる') ? 'きて' : 'して');
-        } else if (group === 2) {
-            masu = stem + 'ます';
-            nai = stem + 'ない';
-            te = stem + 'て';
-        } else { // Group 1
-            const uToI = { 'う': 'い', 'く': 'き', 'ぐ': 'ぎ', 'す': 'し', 'つ': 'ち', 'ぬ': 'に', 'ふ': 'ひ', 'ぶ': 'び', 'む': 'み', 'る': 'り' };
-            masu = stem + uToI[last] + 'ます';
-            const uToA = { 'う': 'わ', 'く': 'か', 'ぐ': 'が', 'す': 'さ', 'つ': 'た', 'ぬ': 'な', 'ふ': 'は', 'ぶ': 'ば', 'む': 'ま', 'る': 'ら' };
-            nai = stem + uToA[last] + 'ない';
-
-            if (jisho === 'いく') te = 'いって';
-            else if ('うつる'.includes(last)) te = stem + 'って';
-            else if ('むぶぬ'.includes(last)) te = stem + 'んで';
-            else if (last === 'く') te = stem + 'いて';
-            else if (last === 'ぐ') te = stem + 'いで';
-            else if (last === 'す') te = stem + 'して';
-            else te = stem + 'って'; // fallback
-        }
-        return { jisho, masu, te, nai, meaning: verb.meaning, type: 'verb' };
-    };
-
-    const verbs = verbsRaw.map(processVerb);
-    const iAdjectives = iAdjectivesRaw.map(adj => {
-        const base = adj.dict === 'いい' ? 'よ' : adj.dict.slice(0, -1);
-        return { type: 'i-adj', meaning: adj.meaning, jisho: adj.dict, plain_past: base + 'かった', plain_negative: base + 'くない' };
-    });
-    const nAdjectives = nAdjectivesRaw.map(adj => {
-        return { type: 'na-adj', meaning: adj.meaning, jisho: adj.dict, plain_past: adj.dict + 'だった', plain_negative: adj.dict + 'じゃない' };
-    });
-
-    const allData = [...verbs, ...iAdjectives, ...nAdjectives];
-    let shuffledData = [];
-    let currentDataItem;
-    let currentQuestionType;
-    let score = 0;
-    let currentQuestionIndex = 0;
-    let currentUser = {};
-    let currentGameMode = 'flashcard';
-
-    const questionTypes = {
-        verb: [{ start: 'jisho', ask: 'masu', name: 'ます形' }, { start: 'masu', ask: 'te', name: 'て形' }, { start: 'jisho', ask: 'nai', name: 'ない形' }],
-        'i-adj': [{ start: 'jisho', ask: 'plain_past', name: 'Plain Past (た形)' }, { start: 'jisho', ask: 'plain_negative', name: 'Plain Negative (ない形)' }],
-        'na-adj': [{ start: 'jisho', ask: 'plain_past', name: 'Plain Past (た形)' }, { start: 'jisho', ask: 'plain_negative', name: 'Plain Negative (ない形)' }],
-    };
-
-    // --- UI Elements ---
-    const getEl = (id) => document.getElementById(id);
-    const UI = {
-        userFormView: getEl('user-form-view'), mainAppView: getEl('main-app-view'), gamePanel: getEl('game-panel'),
-        guidePanel: getEl('guide-panel'), gameChoicePanel: getEl('game-choice-panel'), quizPanelsContainer: getEl('quiz-panels-container'),
-        endGameScreen: getEl('end-game-screen'), flashcardPanel: getEl('flashcard-panel'), typingQuizPanel: getEl('typing-quiz-panel'),
-        userNameInput: getEl('user-name-input'), themeSelect: getEl('theme-select'), startBtn: getEl('start-btn'),
-        choiceButtons: document.querySelectorAll('.choice-btn'), tabGameBtn: getEl('tab-game-btn'), tabGuideBtn: getEl('tab-guide-btn'),
-        restartBtn: getEl('restart-btn'), flipBtn: getEl('flip-btn'), correctBtn: getEl('correct-btn'), incorrectBtn: getEl('incorrect-btn'),
-        submitAnswerBtn: getEl('submit-answer-btn'), typingInput: getEl('typing-input')
-    };
-
-    // --- App Flow & UI ---
-    const showView = (viewToShow) => {
-        [UI.userFormView, UI.mainAppView].forEach(v => v.classList.add('hidden'));
-        viewToShow.classList.remove('hidden');
-        viewToShow.classList.add('panel-enter-active');
-    };
-
-    UI.startBtn.addEventListener('click', () => {
-        currentUser.name = UI.userNameInput.value.trim() || 'အမည်မသိ';
-        applyTheme(UI.themeSelect.value);
-        showView(UI.mainAppView);
-        getEl('welcome-name').textContent = currentUser.name;
-        showGameChoice();
-    });
-
-    const switchMainTab = (activeTab) => {
-        UI.guidePanel.classList.toggle('hidden', activeTab !== 'guide');
-        UI.gamePanel.classList.toggle('hidden', activeTab !== 'game');
-        UI.tabGuideBtn.classList.toggle('active', activeTab === 'guide');
-        UI.tabGameBtn.classList.toggle('active', activeTab === 'game');
-    };
-
-    UI.tabGameBtn.addEventListener('click', () => switchMainTab('game'));
-    UI.tabGuideBtn.addEventListener('click', () => switchMainTab('guide'));
-
-    const showGameChoice = () => {
-        switchMainTab('game');
-        UI.quizPanelsContainer.classList.add('hidden');
-        UI.endGameScreen.classList.add('hidden');
-        UI.gameChoicePanel.classList.remove('hidden');
-    };
-
-    UI.restartBtn.addEventListener('click', showGameChoice);
-
-    // --- Game Logic ---
-    UI.choiceButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            currentGameMode = button.dataset.mode;
-            startGame();
-        });
-    });
-
-    const startGame = () => {
-        score = 0;
-        currentQuestionIndex = 0;
-        shuffledData = shuffleArray([...allData]);
-        UI.gameChoicePanel.classList.add('hidden');
-        UI.quizPanelsContainer.classList.remove('hidden');
-
-        const isFlashcard = currentGameMode === 'flashcard';
-        UI.flashcardPanel.classList.toggle('hidden', !isFlashcard);
-        UI.typingQuizPanel.classList.toggle('hidden', isFlashcard);
-
-        isFlashcard ? loadFlashcardQuestion() : loadTypingQuestion();
-    };
-
-    const loadQuestion = () => {
-        if (currentQuestionIndex >= shuffledData.length) { endGame(); return; }
-        currentDataItem = shuffledData[currentQuestionIndex];
-        const qBank = questionTypes[currentDataItem.type];
-        currentQuestionType = qBank[Math.floor(Math.random() * qBank.length)];
-    };
-
-    const setQuestionUI = (mode, item, qType) => {
-        getEl(`${mode}-score`).textContent = score;
-        getEl(`${mode}-question-count`).textContent = `${currentQuestionIndex + 1} / ${shuffledData.length}`;
-        getEl(`${mode}-q-start`).textContent = item[qType.start];
-        getEl(`${mode}-q-form`).textContent = qType.name;
-        getEl(`${mode}-q-meaning`).textContent = `(${item.meaning})`;
-    };
-
-    const loadFlashcardQuestion = () => {
-        loadQuestion();
-        if (!currentDataItem) return;
-        getEl('flashcard').classList.remove('is-flipped');
-        getEl('feedback-buttons').classList.add('hidden');
-        UI.flipBtn.classList.remove('hidden');
-        setQuestionUI('flashcard', currentDataItem, currentQuestionType);
-        getEl('flashcard-q-answer').textContent = currentDataItem[currentQuestionType.ask];
-    };
-
-    UI.flipBtn.addEventListener('click', () => {
-        getEl('flashcard').classList.add('is-flipped');
-        UI.flipBtn.classList.add('hidden');
-        getEl('feedback-buttons').classList.remove('hidden');
-    });
-
-    const handleFlashcardFeedback = (isCorrect) => {
-        if (isCorrect) score++;
-        currentQuestionIndex++;
-        setTimeout(loadFlashcardQuestion, 300);
-    };
-    UI.correctBtn.addEventListener('click', () => handleFlashcardFeedback(true));
-    UI.incorrectBtn.addEventListener('click', () => handleFlashcardFeedback(false));
-
-    const loadTypingQuestion = () => {
-        loadQuestion();
-        if (!currentDataItem) return;
-        setQuestionUI('typing', currentDataItem, currentQuestionType);
-        UI.typingInput.value = '';
-        UI.typingInput.focus();
-        const feedbackEl = getEl('typing-feedback');
-        feedbackEl.className = 'text-center h-8 my-2 font-bold';
-        feedbackEl.textContent = '';
-    };
-
-    const checkTypingAnswer = () => {
-        const userAnswer = UI.typingInput.value.trim().toLowerCase();
-        const correctAnswer = currentDataItem[currentQuestionType.ask];
-        const feedbackEl = getEl('typing-feedback');
-
-        if (userAnswer === correctAnswer) {
-            score++;
-            feedbackEl.textContent = 'မှန်ပါတယ်!';
-            feedbackEl.classList.add('is-correct');
-            setTimeout(() => { currentQuestionIndex++; loadTypingQuestion(); }, 1200);
+    const verbs = originalVerbs.map(verb => {
+        verb.masen = verb.masu.replace('ます', 'ません');
+        verb.mashita = verb.masu.replace('ます', 'ました');
+        verb.masen_deshita = verb.masu.replace('ます', 'ませんでした');
+        if (verb.te.endsWith('て')) {
+            verb.ta = verb.te.slice(0, -1) + 'た';
+        } else if (verb.te.endsWith('で')) {
+            verb.ta = verb.te.slice(0, -1) + 'だ';
         } else {
-            feedbackEl.textContent = `မှားပါတယ်! အဖြေမှန်: ${correctAnswer}`;
-            feedbackEl.classList.add('is-incorrect');
+            verb.ta = verb.te;
         }
-    };
-    UI.submitAnswerBtn.addEventListener('click', checkTypingAnswer);
-    UI.typingInput.addEventListener('keypress', (e) => e.key === 'Enter' && checkTypingAnswer());
+        return verb;
+    });
 
-    // --- End Game ---
-    const endGame = () => {
-        UI.quizPanelsContainer.classList.add('hidden');
-        UI.endGameScreen.classList.remove('hidden');
-        const percentage = shuffledData.length > 0 ? Math.round((score / shuffledData.length) * 100) : 0;
-        getEl('final-score').textContent = `${score} / ${shuffledData.length}`;
-        getEl('score-percentage').textContent = `(ရလဒ်: ${percentage}%)`;
-        getEl('congrats-message').textContent = `ဂုဏ်ယူပါတယ်, ${currentUser.name}!`;
-        const trophy = getEl('trophy-icon');
-        trophy.className = 'text-6xl mb-4';
-        if (percentage >= 80) {
-            trophy.textContent = '🏆';
-            trophy.classList.add('animate-bounce');
-            if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
-        } else if (percentage >= 50) { trophy.textContent = '👍'; }
-        else { trophy.textContent = '💪'; }
-    };
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let currentVerb;
+    let currentQuestionType;
+    let shuffledVerbs = [];
+    let currentUser = { name: '', level: '' };
+    let currentGameMode = 'mixed';
+    let activeQuestionTypes = [];
 
-    // --- Initial Setup ---
-    const applyTheme = (theme) => {
+    // UI Elements
+    const userFormPanel = document.getElementById('user-form-panel');
+    const mainGameContainer = document.getElementById('main-game-container');
+    const userNameInput = document.getElementById('user-name-input');
+    const levelInput = document.getElementById('level-input');
+    const themeSelect = document.getElementById('theme-select');
+    const startGameBtn = document.getElementById('start-game-btn');
+    const scoreEl = document.getElementById('score');
+    const questionCountEl = document.getElementById('question-count');
+    const verbStartEl = document.getElementById('verb-start');
+    const formTypeEl = document.getElementById('form-type');
+    const verbMeaningEl = document.getElementById('verb-meaning');
+    const flashcardContainer = document.getElementById('flashcard-container');
+    const flashcardFront = document.getElementById('flashcard-front');
+    const flashcardBack = document.getElementById('flashcard-back');
+    const correctAnswerEl = document.getElementById('correct-answer');
+    const flipBtn = document.getElementById('flip-btn');
+    const feedbackButtons = document.getElementById('feedback-buttons');
+    const correctBtn = document.getElementById('correct-btn');
+    const incorrectBtn = document.getElementById('incorrect-btn');
+    const quizMainView = document.getElementById('quiz-main-view');
+    const endGameScreen = document.getElementById('end-game-screen');
+    const finalScoreEl = document.getElementById('final-score');
+    const scorePercentageEl = document.getElementById('score-percentage');
+    const restartBtn = document.getElementById('restart-btn');
+    const congratsMessageEl = document.getElementById('congrats-message');
+    const trophyIconEl = document.getElementById('trophy-icon');
+    const tabGuide = document.getElementById('tab-guide');
+    const quizTabs = document.querySelectorAll('.quiz-tab');
+    const panelQuiz = document.getElementById('panel-quiz');
+    const panelGuide = document.getElementById('panel-guide');
+
+    const mixedQuestionTypes = [{ start: 'masu', ask: 'jisho', ask_name: '辞書形' }, { start: 'masu', ask: 'te', ask_name: 'て形' }, { start: 'masu', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'nai', ask_name: 'ない形' },];
+    const plainQuestionTypes = [{ start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'ta', ask_name: 'た形' }, { start: 'nai', ask: 'jisho', ask_name: '辞書形' }, { start: 'te', ask: 'jisho', ask_name: '辞書形' },];
+    const politeQuestionTypes = [{ start: 'masu', ask: 'masen', ask_name: 'Negative (ません)' }, { start: 'masu', ask: 'mashita', ask_name: 'Past (ました)' }, { start: 'masu', ask: 'masen_deshita', ask_name: 'Past Negative (ませんでした)' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' },];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function applyTheme(theme) {
         document.body.className = `theme-${theme}`;
         localStorage.setItem('theme', theme);
-    };
-    const shuffleArray = (array) => array.slice().sort(() => Math.random() - 0.5);
+    }
 
-    UI.themeSelect.value = localStorage.getItem('theme') || 'light';
-    applyTheme(UI.themeSelect.value);
-    UI.themeSelect.addEventListener('change', (e) => applyTheme(e.target.value));
+    function initializeGame() {
+        currentUser.name = userNameInput.value.trim() || 'အမည်မသိ';
+        currentUser.level = levelInput.value.trim();
+        applyTheme(themeSelect.value);
+        userFormPanel.classList.add('hidden');
+        mainGameContainer.classList.remove('hidden');
+        switchPanel('guide'); // Show guide by default
+    }
+
+    function switchPanel(panelName) {
+        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+        panelQuiz.classList.add('hidden');
+        panelGuide.classList.add('hidden');
+
+        if (panelName === 'guide') {
+            tabGuide.classList.add('active');
+            panelGuide.classList.remove('hidden');
+        } else { // It's a quiz mode
+            const activeTab = document.querySelector(`.quiz-tab[data-mode="${panelName}"]`);
+            if (activeTab) activeTab.classList.add('active');
+            panelQuiz.classList.remove('hidden');
+            setGameMode(panelName);
+        }
+    }
+
+    function setGameMode(mode) {
+        currentGameMode = mode;
+        switch (mode) {
+            case 'plain': activeQuestionTypes = plainQuestionTypes; break;
+            case 'polite': activeQuestionTypes = politeQuestionTypes; break;
+            default: activeQuestionTypes = mixedQuestionTypes; break;
+        }
+        startGame();
+    }
+
+    function startGame() {
+        score = 0;
+        currentQuestionIndex = 0;
+        shuffledVerbs = shuffleArray([...verbs]);
+        scoreEl.textContent = score;
+        questionCountEl.textContent = `0 / ${verbs.length}`;
+        endGameScreen.classList.add('hidden');
+        quizMainView.classList.remove('hidden');
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentQuestionIndex >= verbs.length) {
+            endGame();
+            return;
+        }
+        flashcardFront.classList.remove('hidden');
+        flashcardBack.classList.add('hidden');
+        flipBtn.classList.remove('hidden');
+        feedbackButtons.classList.add('hidden');
+        currentVerb = shuffledVerbs[currentQuestionIndex];
+        currentQuestionType = activeQuestionTypes[Math.floor(Math.random() * activeQuestionTypes.length)];
+        verbStartEl.textContent = currentVerb[currentQuestionType.start];
+        formTypeEl.textContent = currentQuestionType.ask_name;
+        verbMeaningEl.textContent = `(${currentVerb.meaning})`;
+        correctAnswerEl.textContent = currentVerb[currentQuestionType.ask];
+        questionCountEl.textContent = `${currentQuestionIndex + 1} / ${verbs.length}`;
+    }
+
+    function flipCard() {
+        flashcardFront.classList.add('hidden');
+        flashcardBack.classList.remove('hidden');
+        flipBtn.classList.add('hidden');
+        feedbackButtons.classList.remove('hidden');
+    }
+
+    function handleFeedback(isCorrect) {
+        if (isCorrect) {
+            score++;
+            scoreEl.textContent = score;
+        }
+        currentQuestionIndex++;
+        loadQuestion();
+    }
+
+    function endGame() {
+        quizMainView.classList.add('hidden');
+        const percentage = Math.round((score / verbs.length) * 100);
+        finalScoreEl.textContent = `${score} / ${verbs.length}`;
+        scorePercentageEl.textContent = `(${percentage}%)`;
+        congratsMessageEl.textContent = `ဂုဏ်ယူပါတယ်, ${currentUser.name}!`;
+        if (percentage >= 80) {
+            trophyIconEl.textContent = '🏆';
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+            }
+        } else if (percentage >= 50) {
+            trophyIconEl.textContent = '👍';
+        } else {
+            trophyIconEl.textContent = '💪';
+        }
+        endGameScreen.classList.remove('hidden');
+    }
+
+    function resetToTitleScreen() {
+        mainGameContainer.classList.add('hidden');
+        userFormPanel.classList.remove('hidden');
+    }
+
+    // --- Event Listeners ---
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    themeSelect.value = savedTheme;
+    applyTheme(savedTheme);
+
+    themeSelect.addEventListener('change', (e) => applyTheme(e.target.value));
+    startGameBtn.addEventListener('click', initializeGame);
+    flipBtn.addEventListener('click', flipCard);
+    flashcardContainer.addEventListener('click', () => !flipBtn.classList.contains('hidden') && flipCard());
+    correctBtn.addEventListener('click', () => handleFeedback(true));
+    incorrectBtn.addEventListener('click', () => handleFeedback(false));
+    restartBtn.addEventListener('click', resetToTitleScreen);
+    tabGuide.addEventListener('click', () => switchPanel('guide'));
+    quizTabs.forEach(tab => {
+        tab.addEventListener('click', () => switchPanel(tab.getAttribute('data-mode')));
+    });
 });
