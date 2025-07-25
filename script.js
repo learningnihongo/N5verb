@@ -212,18 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const plainQuestionTypes = [{ start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'ta', ask_name: 'た形' }, { start: 'nai', ask: 'jisho', ask_name: '辞書形' }, { start: 'te', ask: 'jisho', ask_name: '辞書形' },];
     const politeQuestionTypes = [{ start: 'masu', ask: 'masen', ask_name: 'Negative (ません)' }, { start: 'masu', ask: 'mashita', ask_name: 'Past (ました)' }, { start: 'masu', ask: 'masen_deshita', ask_name: 'Past Negative (ませんでした)' }, { start: 'jisho', ask: 'masu', ask_name: 'ます形' },];
 
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    function applyTheme(theme) {
-        document.body.className = `theme-${theme}`;
-        localStorage.setItem('theme', theme);
-    }
+    function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } return array; }
+    function applyTheme(theme) { document.body.className = `theme-${theme}`; localStorage.setItem('theme', theme); }
 
     function initializeGame() {
         currentUser.name = userNameInput.value.trim() || 'အမည်မသိ';
@@ -272,10 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadQuestion() {
-        if (currentQuestionIndex >= verbs.length) {
-            endGame();
-            return;
-        }
+        if (currentQuestionIndex >= verbs.length) { endGame(); return; }
         flashcardFront.classList.remove('hidden');
         flashcardBack.classList.add('hidden');
         flipBtn.classList.remove('hidden');
@@ -297,10 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleFeedback(isCorrect) {
-        if (isCorrect) {
-            score++;
-            scoreEl.textContent = score;
-        }
+        if (isCorrect) { score++; scoreEl.textContent = score; }
         currentQuestionIndex++;
         loadQuestion();
     }
@@ -313,9 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         congratsMessageEl.textContent = `ဂုဏ်ယူပါတယ်, ${currentUser.name}!`;
         if (percentage >= 80) {
             trophyIconEl.textContent = '🏆';
-            if (typeof confetti === 'function') {
-                confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
-            }
+            if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
         } else if (percentage >= 50) {
             trophyIconEl.textContent = '👍';
         } else {
