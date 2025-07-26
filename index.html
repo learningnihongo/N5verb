@@ -1,223 +1,129 @@
 <!DOCTYPE html>
-<html lang="my">
-
+<html lang="my" data-theme="system">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ဂျပန်စာ လေ့လာကြမယ် (N5)</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <meta name="author" content="Win Paing Soe">
+    <meta name="description" content="ဂျပန်ဘာသာ N5 ဝေါဟာရနှင့် သဒ္ဒါပုံစံပြောင်းနည်းများကို theme မျိုးစုံဖြင့် လေ့လာနိုင်သော ဂိမ်း။">
+    <title>🇯🇵 Learning N5 </title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Orbitron:wght@700&family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
+    <!-- Theme Settings -->
+    <div id="theme-switcher">
+        <button id="theme-toggle-btn" class="theme-btn" aria-label="Toggle theme settings"><i class="fa-solid fa-palette"></i></button>
+        <div id="theme-menu" class="hidden">
+            <button class="theme-option" data-theme="white"><i class="fa-solid fa-sun"></i> White</button>
+            <button class="theme-option" data-theme="dark"><i class="fa-solid fa-moon"></i> Dark</button>
+            <button class="theme-option" data-theme="sakura"><i class="fa-solid fa-fan"></i> ဆာကူရာ</button>
+            <button class="theme-option" data-theme="cyber"><i class="fa-solid fa-robot"></i> Cyber</button>
+            <button class="theme-option" data-theme="system"><i class="fa-solid fa-desktop"></i> System</button>
+        </div>
+    </div>
 
-<body class="theme-light">
-    <main class="flex items-center justify-center min-h-screen p-2 sm:p-4">
-        <div id="app-container" class="w-full max-w-4xl mx-auto">
-            <div id="user-form-view" class="bg-card rounded-2xl shadow-xl p-6 md:p-8 text-text-primary panel-enter-active">
-                <div class="text-center mb-6">
-                    <h1 class="text-2xl md:text-3xl font-bold"><i class="fas fa-torii-gate text-primary"></i> ဂျပန်စာ N5 လေ့လာကြမယ်</h1>
-                    <p class="text-text-secondary mt-2">ဂိမ်းမစခင် အချက်အလက်ဖြည့်စွက်ပေးပါ။</p>
-                </div>
-                <div class="space-y-4">
-                    <div>
-                        <label for="user-name-input" class="block mb-2 font-semibold"><i class="fas fa-user icon-primary"></i> အမည်</label>
-                        <input type="text" id="user-name-input" placeholder="သင်၏အမည်ကိုထည့်ပါ" class="w-full p-3 text-lg bg-input border-2 border-border rounded-lg focus:ring-2 focus:ring-primary">
-                    </div>
-                    <div>
-                        <label for="theme-select" class="block mb-2 font-semibold"><i class="fas fa-palette icon-primary"></i> Theme</label>
-                        <select id="theme-select" class="w-full p-3 text-lg bg-input border-2 border-border rounded-lg">
-                            <option value="light">Light</option>
-                            <option value="dark">Dark</option>
-                            <option value="sakura">Sakura</option>
-                            <option value="ocean">Ocean</option>
-                            <option value="matcha">Matcha</option>
-                        </select>
-                    </div>
-                    <button id="start-btn" class="w-full btn-primary"><i class="fas fa-play-circle"></i> စတင်မယ်</button>
-                </div>
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen active">
+        <div class="container">
+            <h1 class="logo-title"><i class="fa-solid fa-torii-gate logo-icon"></i> N5 ကျွမ်းကျင်ဂိမ်း</h1>
+            <p>ဂျပန်ဘာသာ N5 ကို ကျွမ်းကျင်စွာ တတ်မြောက်လိုက်ပါ။</p>
+            <input type="text" id="username" placeholder="သင့်အမည်ကိုထည့်ပါ" autocomplete="name">
+            
+            <div class="selection-group">
+                <label for="study-method"><i class="fa-solid fa-graduation-cap"></i> လေ့လာမှုပုံစံ</label>
+                <select id="study-method">
+                    <option value="flashcard">Flash Cards (ပြန်လည်နွှေးရန်)</option>
+                    <option value="quiz">Interactive Quiz (စမ်းစစ်ရန်)</option>
+                </select>
             </div>
 
-            <div id="main-app-view" class="bg-card rounded-2xl shadow-xl p-4 md:p-6 hidden text-text-primary">
-                <div class="flex border-b border-border mb-4">
-                    <button id="tab-game-btn" class="main-tab-btn active"><i class="fas fa-gamepad"></i> Game</button>
-                    <button id="tab-guide-btn" class="main-tab-btn"><i class="fas fa-book"></i> လမ်းညွှန်</button>
-                </div>
+            <div class="selection-group">
+                <label for="quiz-topic"><i class="fa-solid fa-book-open"></i> အကြောင်းအရာ</label>
+                <select id="quiz-topic">
+                    <option value="vocabulary">ဝေါဟာရ (အားလုံး)</option>
+                    <option value="verb-conjugation">Verb ပုံစံပြောင်း (nai, te, ta, masu)</option>
+                    <option value="adjective-conjugation">Adjective ပုံစံပြောင်း</option>
+                    <option value="polite-plain-all">Polite/Plain Forms (အားလုံး)</option>
+                </select>
+            </div>
+            
+            <button id="start-game-btn" class="btn btn-primary"><i class="fa-solid fa-play"></i> ဂိမ်းစတင်မည်</button>
+            <button id="guide-btn" class="btn btn-secondary"><i class="fa-solid fa-info-circle"></i> လမ်းညွှန်</button>
+        </div>
+    </div>
 
-                <div id="game-panel" class="panel-enter-active">
-                    <div id="game-choice-panel" class="text-center">
-                        <h2 class="text-2xl font-bold mb-2">မင်္ဂလာပါ, <span id="welcome-name"></span>!</h2>
-                        <p class="text-text-secondary mb-6">ကစားမည့် ပုံစံကို ရွေးချယ်ပါ။</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                            <button data-mode="flashcard" class="choice-btn">
-                                <i class="fas fa-clone text-4xl md:text-5xl mb-4"></i>
-                                <span class="text-xl md:text-2xl font-bold">Flashcard Quiz</span>
-                            </button>
-                            <button data-mode="typing-quiz" class="choice-btn">
-                                <i class="fas fa-keyboard text-4xl md:text-5xl mb-4"></i>
-                                <span class="text-xl md:text-2xl font-bold">Typing Quiz</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="quiz-panels-container" class="hidden">
-                        <div class="flex border-b border-border mb-4 flex-wrap">
-                            <button data-sub-mode="verb-plain" class="sub-tab-btn quiz-sub-tab flex-grow py-2 px-1 text-xs md:text-sm rounded-t-lg active">ကြိယာ (ရိုးရိုး)</button>
-                            <button data-sub-mode="verb-polite" class="sub-tab-btn quiz-sub-tab flex-grow py-2 px-1 text-xs md:text-sm rounded-t-lg">ကြိယာ (ယဉ်ကျေး)</button>
-                            <button data-sub-mode="adj-plain" class="sub-tab-btn quiz-sub-tab flex-grow py-2 px-1 text-xs md:text-sm rounded-t-lg">နာမဝိသေသန (ရိုးရိုး)</button>
-                            <button data-sub-mode="adj-polite" class="sub-tab-btn quiz-sub-tab flex-grow py-2 px-1 text-xs md:text-sm rounded-t-lg">နာမဝိသေသန (ယဉ်ကျေး)</button>
-                            <button data-sub-mode="mixed-all" class="sub-tab-btn quiz-sub-tab flex-grow py-2 px-1 text-xs md:text-sm rounded-t-lg">အားလုံးပေါင်း</button>
-                        </div>
-                        
-                        <div id="flashcard-panel">
-                            <div class="quiz-header">
-                                <div id="flashcard-score" class="font-bold"><i class="fas fa-star text-yellow-400"></i> 0</div>
-                                <div id="flashcard-question-count" class="font-bold">0 / 0</div>
-                            </div>
-                            <div id="flashcard-container" class="mb-4">
-                                <div id="flashcard">
-                                    <div id="flashcard-front" class="flashcard-face">
-                                        <p class="question-text">"<strong id="flashcard-q-start"></strong>" ကို <strong id="flashcard-q-form"></strong> ပြောင်းပါ။</p>
-                                        <p class="meaning-text" id="flashcard-q-meaning"></p>
-                                    </div>
-                                    <div id="flashcard-back" class="flashcard-face">
-                                        <p class="answer-text" id="flashcard-q-answer"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="flashcard-button-group">
-                                <button id="flip-btn" class="w-full btn-secondary"><i class="fas fa-sync-alt"></i> အဖြေကြည့်ရန်</button>
-                                <div id="feedback-buttons" class="hidden grid grid-cols-2 gap-3">
-                                    <button id="correct-btn" class="btn-correct"><i class="fas fa-check"></i> မှန်တယ်</button>
-                                    <button id="incorrect-btn" class="btn-incorrect"><i class="fas fa-times"></i> မှားတယ်</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="typing-quiz-panel" class="hidden">
-                            <div class="quiz-header">
-                                <div id="typing-score" class="font-bold"><i class="fas fa-star text-yellow-400"></i> 0</div>
-                                <div id="typing-question-count" class="font-bold">0 / 0</div>
-                            </div>
-                            <div class="bg-background rounded-lg p-5 text-center mb-4">
-                                <p class="question-text">"<strong id="typing-q-start"></strong>" ကို <strong id="typing-q-form"></strong> ရိုက်ထည့်ပါ</p>
-                                <p class="meaning-text" id="typing-q-meaning"></p>
-                            </div>
-                            <div id="typing-feedback" class="text-center h-8 my-2 font-bold"></div>
-                            <input type="text" id="typing-input" placeholder="အဖြေကိုရိုက်ထည့်ပါ..." lang="ja" autocomplete="off" class="w-full p-3 text-lg bg-input border-2 border-border rounded-lg focus:ring-2 focus:ring-primary mb-4">
-                            <div class="grid grid-cols-2 gap-3">
-                               <button id="submit-answer-btn" class="btn-primary">စစ်ဆေးရန်</button>
-                               <button id="next-question-btn" class="btn-secondary hidden">နောက်တစ်ပုဒ်</button>
-                            </div>
-                        </div>
-                    </div>
-                     <div id="end-game-screen" class="hidden text-center p-4 md:p-6">
-                        <div id="trophy-icon" class="text-6xl mb-4">🏆</div>
-                        <h2 id="congrats-message" class="text-2xl md:text-3xl font-bold text-yellow-500 mb-2">ဂုဏ်ယူပါတယ်!</h2>
-                        <div class="bg-background rounded-lg p-4 mb-6">
-                            <p class="text-lg text-text-secondary">စုစုပေါင်းရမှတ်</p>
-                            <p id="final-score" class="text-4xl font-bold text-primary"></p>
-                            <p id="score-percentage" class="text-md text-text-secondary mt-1"></p>
-                        </div>
-                        <button id="restart-btn" class="w-full btn-primary"><i class="fas fa-redo"></i> နောက်တစ်ပွဲကစားရန်</button>
-                    </div>
-                </div>
-
-                <div id="guide-panel" class="hidden guide-content panel-enter-active">
-                    <h3><i class="fas fa-sitemap"></i> Verb များကို Group ခွဲခြင်း</h3>
-                    <h4>Group 1</h4>
-                    <p>う, つ, る, む, ぬ, ぶ, く, ぐ, す စသည့် စာလုံးများဖြင့် အဆုံးသတ်သော ကြိယာများကို Group 1 အဖြစ် သတ်မှတ်သည်။</p>
-                    <h4 class="mt-4">Group 1 ၏ ခြွင်းချက်များ</h4>
-                    <p>အောက်ပါကြိယာများသည် ပုံစံအရ Group 2 နှင့်တူသော်လည်း Group 1 တွင်ပါဝင်သည်။</p>
-                    <ul class="list-disc list-inside mt-2">
-                        <li>まいる, はいる, はしる, しる, いる, ちる, きる, かえる, ける, へる, ひねる</li>
-                    </ul>
-                    <h4 class="mt-4">Group 2</h4>
-                    <p>る ဖြင့်အဆုံးသတ်ပြီး၊ る ၏ရှေ့တွင် い (i) သို့မဟုတ် え (e) သံတန်းမှ စာလုံးများရှိပါက Group 2 အဖြစ် သတ်မှတ်သည်။ ဥပမာ: たべる</p>
-                    <h4 class="mt-4">Group 3</h4>
-                    <p>する နှင့် くる နှစ်မျိုးသာရှိသည်။</p>
-
-                    <h3 class="mt-8"><i class="fas fa-exchange-alt"></i> Dictionary Form → ます Form ပြောင်းခြင်း</h3>
-                    <div class="overflow-x-auto shadow-md rounded-lg">
-                        <table>
-                            <thead><tr><th>Group</th><th>ပြောင်းလဲနည်း</th><th>ဥပမာ</th></tr></thead>
-                            <tbody>
-                                <tr><td><b>Group 1</b></td><td>နောက်ဆုံးစာလုံးကို い (i) သံတန်းသို့ပြောင်းပြီး ます ပေါင်းပါ။</td><td>のむ → のみます</td></tr>
-                                <tr><td><b>Group 2</b></td><td>る ကိုဖြုတ်ပြီး ます ပေါင်းပါ။</td><td>たべる → たべます</td></tr>
-                                <tr><td><b>Group 3</b></td><td>する → します<br>くる → きます</td><td>しんぱいする → しんぱいします</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 class="mt-8">て / た Form ပြောင်းခြင်း</h3>
-                    <div class="overflow-x-auto shadow-md rounded-lg">
-                        <h4 class="p-4">Group 1</h4>
-                        <table>
-                            <thead><tr><th>အဆုံးသတ်</th><th>ပြောင်းလဲပုံ</th><th>ဥပမာ</th></tr></thead>
-                            <tbody>
-                                <tr><td>う, つ, る</td><td>って / った</td><td>あらう → あらって</td></tr>
-                                <tr><td>む, ぬ, ぶ</td><td>んで / んだ</td><td>のむ → のんで</td></tr>
-                                <tr><td>く</td><td>いて / いた</td><td>かく → かいて</td></tr>
-                                <tr><td>ぐ</td><td>いで / いだ</td><td>およぐ → およいで</td></tr>
-                                <tr><td>す</td><td>して / した</td><td>はなす → はなして</td></tr>
-                                <tr><td colspan="3"><b>ခြွင်းချက်:</b> いく → いって</td></tr>
-                            </tbody>
-                        </table>
-                        <div class="p-4">
-                            <p><b>Group 2:</b> る ကိုဖြုတ်ပြီး て / た ပေါင်းပါ။ ဥပမာ: たべる → たべて</p>
-                            <p><b>Group 3:</b> くる → きて, する → して</p>
-                        </div>
-                    </div>
-
-                    <h3 class="mt-8">Nai Form (အငြင်းပုံစံ) ပြောင်းခြင်း</h3>
-                    <div class="overflow-x-auto shadow-md rounded-lg">
-                        <table>
-                            <thead><tr><th>Group</th><th>ပြောင်းလဲနည်း</th><th>ဥပမာ</th></tr></thead>
-                            <tbody>
-                                <tr><td><b>Group 1</b></td><td>နောက်ဆုံးစာလုံးကို あ (a) သံတန်းသို့ပြောင်းပြီး ない ပေါင်းပါ။<br><span class="text-accent">* う ဖြင့်ဆုံးလျှင် わ ない ဖြစ်မည်။</span></td><td>いく → いかない<br>あう → あわない</td></tr>
-                                <tr><td><b>Group 2</b></td><td>る ကိုဖြုတ်ပြီး ない ပေါင်းပါ။</td><td>たべる → たべない</td></tr>
-                                <tr><td><b>Group 3</b></td><td>くる → こない<br>する → しない</td><td>-</td></tr>
-                                <tr><td colspan="3"><b>ခြွင်းချက်:</b> ある → ない</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 class="mt-8"><i class="fas fa-leaf"></i> い-Adjective Form ပြောင်းခြင်း (e.g. あつい)</h3>
-                    <div class="overflow-x-auto shadow-md rounded-lg">
-                        <table>
-                            <thead><tr><th>Form</th><th>Positive (ဟုတ်)</th><th>Negative (မဟုတ်)</th></tr></thead>
-                            <tbody>
-                                <tr><td><b>Polite Present</b></td><td>あついです</td><td>あつくないです</td></tr>
-                                <tr><td><b>Polite Past</b></td><td>あつかったです</td><td>あつくなかったです</td></tr>
-                                <tr><td><b>Plain Present</b></td><td>あつい</td><td>あつくない</td></tr>
-                                <tr><td><b>Plain Past</b></td><td>あつかった</td><td>あつくなかった</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 class="mt-8"><i class="fas fa-spa"></i> な-Adjective Form ပြောင်းခြင်း (e.g. しずか)</h3>
-                    <div class="overflow-x-auto shadow-md rounded-lg">
-                        <table>
-                            <thead><tr><th>Form</th><th>Positive (ဟုတ်)</th><th>Negative (မဟုတ်)</th></tr></thead>
-                            <tbody>
-                                <tr><td><b>Polite Present</b></td><td>しずかです</td><td>しずかじゃありません</td></tr>
-                                <tr><td><b>Polite Past</b></td><td>しずかでした</td><td>しずかじゃありませんでした</td></tr>
-                                <tr><td><b>Plain Present</b></td><td>しずかだ</td><td>しずかじゃない</td></tr>
-                                <tr><td><b>Plain Past</b></td><td>しずかだった</td><td>しずかじゃなかった</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+        <div id="game-header">
+            <div id="progress-container">
+                <div id="progress-text"></div>
+                <div id="progress-bar-full"><div id="progress-bar"></div></div>
+            </div>
+            <div id="score-container">
+                <p><i class="fa-solid fa-star"></i> အမှတ်: <span id="score">0</span></p>
             </div>
         </div>
-    </main>
-    <footer class="bg-slate-800 text-white text-center p-4 mt-4">
-        <p class="font-bold">Developer: winpaing</p>
-        <p>Email: sysadm.winpaingsoe@gmail.com</p>
+        
+        <div id="game-content-area">
+            <div id="flashcard-container" class="game-mode-container">
+                <div class="flashcard" id="flashcard">
+                    <div class="card-face card-front" id="flashcard-front"></div>
+                    <div class="card-face card-back" id="flashcard-back"></div>
+                </div>
+                 <div class="navigation-buttons">
+                    <button id="prev-card-btn" class="btn btn-secondary" aria-label="Previous card"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button id="flip-card-btn" class="btn btn-secondary" aria-label="Flip card"><i class="fa-solid fa-rotate"></i> လှန်မည်</button>
+                    <button id="next-card-btn" class="btn btn-secondary" aria-label="Next card"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div id="quiz-container" class="game-mode-container">
+                <h2 id="quiz-question"></h2>
+                <div id="typing-wrapper">
+                    <input type="text" id="typing-answer" placeholder="အဖြေကို ဟီရာဂါနာဖြင့်ရိုက်ထည့်ပါ" autocomplete="off">
+                    <button id="submit-typing-answer-btn" class="btn btn-primary">စစ်ဆေးမည်</button>
+                </div>
+                <div id="mcq-choices"></div>
+                <div id="quiz-feedback"></div>
+            </div>
+        </div>
+
+        <button id="end-game-early-btn" class="btn btn-danger"><i class="fa-solid fa-stop-circle"></i> ရပ်မည်</button>
+    </div>
+
+    <!-- End Screen -->
+    <div id="end-screen" class="screen">
+        <div class="container">
+            <h1>ဂိမ်းပြီးဆုံးပါပြီ!</h1>
+            <h2 id="end-message"></h2>
+            <h3><i class="fa-solid fa-chart-line"></i> စုစုပေါင်းရမှတ်: <span id="final-score"></span></h3>
+            <div id="incorrect-answers-container">
+                <h4><i class="fa-solid fa-magnifying-glass-chart"></i> မှားယွင်းခဲ့သောအဖြေများ:</h4>
+                <ul id="incorrect-answers-list"></ul>
+            </div>
+            <button id="play-again-btn" class="btn btn-primary"><i class="fa-solid fa-redo"></i> ထပ်မံကစားမည်</button>
+        </div>
+    </div>
+
+    <!-- Guide Modal -->
+    <div id="guide-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h2><i class="fa-solid fa-book"></i> ကစားနည်းလမ်းညွှန်</h2>
+            <div id="guide-content"></div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Developed by Win Paing Soe</p>
     </footer>
 
     <script src="script.js"></script>
 </body>
-
 </html>
