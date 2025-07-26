@@ -1,4 +1,4 @@
-/* --- Theme Variables --- */
+* --- Theme Variables --- */
 :root {
     --bg-primary: #ffffff;
     --bg-secondary: #f9fafb;
@@ -12,7 +12,6 @@
     --correct-color: #22c55e;
     --incorrect-color: #ef4444;
 }
-
 .theme-dark {
     --bg-primary: #1f2937;
     --bg-secondary: #111827;
@@ -24,7 +23,6 @@
     --secondary-color: #9ca3af;
     --accent-color: #f87171;
 }
-
 .theme-sakura {
     --bg-primary: #fff0f3;
     --bg-secondary: #ffe5ea;
@@ -36,7 +34,6 @@
     --secondary-color: #ff8fab;
     --accent-color: #e5627c;
 }
-
 .theme-ocean {
     --bg-primary: #e0f7fa;
     --bg-secondary: #b2ebf2;
@@ -48,7 +45,6 @@
     --secondary-color: #26a69a;
     --accent-color: #ef5350;
 }
-
 .theme-matcha {
     --bg-primary: #F0F4F0;
     --bg-secondary: #E4EAE4;
@@ -68,18 +64,10 @@ body {
     color: var(--text-primary);
     transition: background-color 0.3s, color 0.3s;
 }
-
-main {
-    flex-grow: 1;
-}
+main { flex-grow: 1; }
 
 /* --- Buttons & Inputs --- */
-.btn-primary,
-.btn-secondary,
-.choice-btn,
-.main-tab-btn,
-.btn-correct,
-.btn-incorrect {
+.btn-primary, .btn-secondary, .choice-btn, .main-tab-btn, .btn-correct, .btn-incorrect {
     transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     padding: 0.75rem 1.5rem;
     border-radius: 0.75rem;
@@ -87,46 +75,21 @@ main {
     font-size: 1.125rem;
     cursor: pointer;
     border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.btn-secondary {
-    background-color: var(--secondary-color);
-    color: white;
-}
-
-.btn-primary:hover,
-.btn-secondary:hover,
-.choice-btn:hover {
+.btn-primary { background-color: var(--primary-color); color: white; }
+.btn-secondary { background-color: var(--secondary-color); color: white; }
+.btn-primary:hover, .btn-secondary:hover, .choice-btn:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
-
-.btn-primary:active,
-.btn-secondary:active,
-.choice-btn:active {
+.btn-primary:active, .btn-secondary:active, .choice-btn:active {
     transform: translateY(-1px) scale(0.98);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
-
-.btn-correct {
-    background-color: var(--correct-color);
-    color: white;
-}
-
-.btn-incorrect {
-    background-color: var(--incorrect-color);
-    color: white;
-}
-
-.icon-primary {
-    color: var(--primary-color);
-}
+.btn-correct { background-color: var(--correct-color); color: white; }
+.btn-incorrect { background-color: var(--incorrect-color); color: white; }
+.icon-primary { color: var(--primary-color); }
 
 /* --- Main Tab Navigation --- */
 .main-tab-btn {
@@ -137,16 +100,11 @@ main {
     border-radius: 0;
     box-shadow: none;
 }
-
 .main-tab-btn.active {
     color: var(--primary-color);
     border-bottom-color: var(--primary-color);
 }
-
-.main-tab-btn i {
-    margin-right: 8px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
+.main-tab-btn i { margin-right: 8px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
 
 /* --- Game Choice Panel --- */
 .choice-btn {
@@ -159,20 +117,13 @@ main {
     justify-content: center;
     color: var(--primary-color);
 }
-
 .choice-btn:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
     background-color: var(--bg-primary);
 }
-
-.choice-btn i {
-    transition: transform 0.3s ease;
-}
-
-.choice-btn:hover i {
-    transform: scale(1.1);
-}
+.choice-btn i { transition: transform 0.3s ease; }
+.choice-btn:hover i { transform: scale(1.1); }
 
 /* --- Quiz Header & Texts --- */
 .quiz-header {
@@ -185,169 +136,59 @@ main {
     margin-bottom: 1rem;
     font-size: 1.1rem;
 }
-
-.quiz-header i {
-    margin-right: 6px;
-}
-
-.question-text {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-}
-
-.question-text strong {
-    color: var(--text-primary);
-    font-weight: 700;
-}
-
-.meaning-text {
-    font-size: 1rem;
-    color: var(--accent-color);
-    font-family: 'Padauk', sans-serif;
-}
-
-.answer-text {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--correct-color);
-}
+.quiz-header i { margin-right: 6px; }
+.question-text { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-secondary); line-height: 1.5; }
+.question-text strong { color: var(--text-primary); font-weight: 700; }
+.meaning-text { font-size: 1rem; color: var(--accent-color); font-family: 'Padauk', sans-serif; }
+.answer-text { font-size: 2rem; font-weight: 800; color: var(--correct-color); }
 
 
 /* --- Flashcard Style --- */
-#flashcard-container {
-    perspective: 1500px;
-    min-height: 180px;
-}
-
+#flashcard-container { perspective: 1500px; min-height: 180px; }
 #flashcard {
-    width: 100%;
-    height: 180px;
-    position: relative;
+    width: 100%; height: 180px; position: relative;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
 .flashcard-face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: absolute; width: 100%; height: 100%;
     backface-visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 1rem;
-    padding: 1.25rem;
-    background-color: var(--bg-background);
-    border: 1px solid var(--border-color);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    border-radius: 1rem; padding: 1.25rem;
+    background-color: var(--bg-background); border: 1px solid var(--border-color);
     cursor: pointer;
 }
-
-#flashcard-back {
-    transform: rotateY(180deg);
-}
-
-#flashcard.is-flipped {
-    transform: rotateY(180deg);
-}
+#flashcard-back { transform: rotateY(180deg); }
+#flashcard.is-flipped { transform: rotateY(180deg); }
 
 
 /* --- Animations --- */
 @keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
-.panel-enter-active {
-    animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.is-correct {
-    animation: tada 1s;
-    color: var(--correct-color);
-}
-
-.is-incorrect {
-    animation: shake 0.82s;
-    color: var(--incorrect-color);
-}
-
+.panel-enter-active { animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.is-correct { animation: tada 1s; color: var(--correct-color); }
+.is-incorrect { animation: shake 0.82s; color: var(--incorrect-color); }
 @keyframes tada {
-    from {
-        transform: scale3d(1, 1, 1);
-    }
-
-    10%,
-    20% {
-        transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
-    }
-
-    30%,
-    50%,
-    70%,
-    90% {
-        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
-    }
-
-    40%,
-    60%,
-    80% {
-        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
-    }
-
-    to {
-        transform: scale3d(1, 1, 1);
-    }
+  from { transform: scale3d(1, 1, 1); }
+  10%, 20% { transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg); }
+  30%, 50%, 70%, 90% { transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg); }
+  40%, 60%, 80% { transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg); }
+  to { transform: scale3d(1, 1, 1); }
 }
-
 @keyframes shake {
-
-    10%,
-    90% {
-        transform: translate3d(-1px, 0, 0);
-    }
-
-    20%,
-    80% {
-        transform: translate3d(2px, 0, 0);
-    }
-
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-4px, 0, 0);
-    }
-
-    40%,
-    60% {
-        transform: translate3d(4px, 0, 0);
-    }
+  10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
 /* --- Guide Content --- */
-.guide-content {
-    line-height: 1.8;
-}
-
+.guide-content { line-height: 1.8; }
 .guide-content h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
+    font-size: 1.5rem; font-weight: bold; color: var(--primary-color);
+    margin-top: 2rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
     border-bottom: 3px solid var(--primary-color);
 }
-
 .guide-content h4 {
     font-size: 1.25rem;
     font-weight: 700;
@@ -355,30 +196,14 @@ main {
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
 }
-
 .guide-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
+    width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 1rem;
 }
-
-.guide-content th,
-.guide-content td {
-    border: 1px solid var(--border-color);
-    padding: 0.75rem;
-    text-align: left;
+.guide-content th, .guide-content td {
+    border: 1px solid var(--border-color); padding: 0.75rem; text-align: left;
 }
-
-.guide-content th {
-    background-color: var(--bg-secondary);
-    font-weight: 700;
-}
-
-.guide-content ul {
-    list-style-type: disc;
-    margin-left: 20px;
-}
+.guide-content th { background-color: var(--bg-secondary); font-weight: 700; }
+.guide-content ul { list-style-type: disc; margin-left: 20px; }
 
 
 /* --- Responsive Design --- */
@@ -394,37 +219,28 @@ main {
     #app-container {
         padding: 0;
     }
-
-    #user-form-view,
-    #main-app-view {
+    #user-form-view, #main-app-view {
         padding: 1rem;
         border-radius: 0;
         min-height: 100vh;
     }
-
     .main-tab-btn {
         padding: 0.75rem 0.5rem;
     }
-
     .choice-btn {
         padding: 1.5rem;
     }
-
     .quiz-header {
         font-size: 0.9rem;
         padding: 0.5rem 0.75rem;
     }
-
-    #flashcard-container,
-    #flashcard {
+    #flashcard-container, #flashcard {
         min-height: 150px;
         height: 150px;
     }
-
     .question-text {
         font-size: 1.1rem;
     }
-
     .answer-text {
         font-size: 1.75rem;
     }
