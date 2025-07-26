@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { masu: 'じゅんびをします', jisho: 'じゅんびをする', te: 'じゅんびをして', nai: 'じゅんびをしない', meaning: 'ကြိုတင်ပြင်ဆင်သည်။' },
         { masu: 'かんがえます', jisho: 'かんがえる', te: 'かんがえて', nai: 'かんがえない', meaning: 'စဉ်းစားသည်။ တွေးခေါ်သည်။' },
         { masu: 'つきます', jisho: 'つく', te: 'ついて', nai: 'つかない', meaning: 'ဆိုက်ရောက်သည်။' },
-        { masu: 'たります', jisho: 'たりる', te: 'たりて', nai: 'たりない', meaning: 'လုံလောက်သည်။' }
+        { masu: 'たります', jisho: 'たりる', te: 'たりて', nai: 'たりない', meaning: 'လုံလောက်သည်။' },
+        { masu: 'がんばります', jisho: 'がんばる', te: 'がんばって', nai: 'がんばらない', meaning: 'ကြိုးစားသည်။' }
     ].map(verb => {
         verb.type = 'Verb';
         verb.masen = verb.masu.replace('ます', 'ません');
@@ -241,8 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return adj;
     });
 
-    // ... (The rest of the JS file is the same as the previous response) ...
-
     let currentQuestionIndex = 0;
     let score = 0;
     let currentItem;
@@ -264,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabGuideBtn = document.getElementById('tab-guide-btn');
     const gamePanel = document.getElementById('game-panel');
     const guidePanel = document.getElementById('guide-panel');
-
+    
     const gameChoicePanel = document.getElementById('game-choice-panel');
     const choiceBtns = document.querySelectorAll('.choice-btn');
     const quizPanelsContainer = document.getElementById('quiz-panels-container');
@@ -282,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const feedbackButtons = document.getElementById('feedback-buttons');
     const correctBtn = document.getElementById('correct-btn');
     const incorrectBtn = document.getElementById('incorrect-btn');
-
+    
     const typingQStart = document.getElementById('typing-q-start');
     const typingQForm = document.getElementById('typing-q-form');
     const typingQMeaning = document.getElementById('typing-q-meaning');
@@ -299,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         flashcard: document.getElementById('flashcard-question-count'),
         typing: document.getElementById('typing-question-count')
     };
-
+    
     const endGameScreen = document.getElementById('end-game-screen');
     const finalScore = document.getElementById('final-score');
     const scorePercentage = document.getElementById('score-percentage');
@@ -307,12 +306,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
 
     // Question Type Definitions
-    const verbPlainTypes = [{ start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'ta', ask_name: 'た形' },];
-    const verbPoliteTypes = [{ start: 'jisho', ask: 'masu', ask_name: 'ます形' }, { start: 'masu', ask: 'masen', ask_name: 'ません形' }, { start: 'masu', ask: 'mashita', ask_name: 'ました形' }, { start: 'masu', ask: 'masen_deshita', ask_name: 'ませんでした形' },];
-    const adjPlainTypes = [{ start: 'dictionary', ask: 'plain_negative', ask_name: 'Plain Negative' }, { start: 'dictionary', ask: 'plain_past', ask_name: 'Plain Past' }, { start: 'dictionary', ask: 'plain_past_negative', ask_name: 'Plain Past Negative' },];
-    const adjPoliteTypes = [{ start: 'dictionary', ask: 'polite_present', ask_name: 'Polite Present' }, { start: 'dictionary', ask: 'polite_negative', ask_name: 'Polite Negative' }, { start: 'dictionary', ask: 'polite_past', ask_name: 'Polite Past' }, { start: 'dictionary', ask: 'polite_past_negative', ask_name: 'Polite Past Negative' },];
+    const verbPlainTypes = [ { start: 'jisho', ask: 'nai', ask_name: 'ない形' }, { start: 'jisho', ask: 'te', ask_name: 'て形' }, { start: 'jisho', ask: 'ta', ask_name: 'た形' }, ];
+    const verbPoliteTypes = [ { start: 'jisho', ask: 'masu', ask_name: 'ます形' }, { start: 'masu', ask: 'masen', ask_name: 'ません形' }, { start: 'masu', ask: 'mashita', ask_name: 'ました形' }, { start: 'masu', ask: 'masen_deshita', ask_name: 'ませんでした形' }, ];
+    const adjPlainTypes = [ { start: 'dictionary', ask: 'plain_negative', ask_name: 'Plain Negative' }, { start: 'dictionary', ask: 'plain_past', ask_name: 'Plain Past' }, { start: 'dictionary', ask: 'plain_past_negative', ask_name: 'Plain Past Negative' }, ];
+    const adjPoliteTypes = [ { start: 'dictionary', ask: 'polite_present', ask_name: 'Polite Present' }, { start: 'dictionary', ask: 'polite_negative', ask_name: 'Polite Negative' }, { start: 'dictionary', ask: 'polite_past', ask_name: 'Polite Past' }, { start: 'dictionary', ask: 'polite_past_negative', ask_name: 'Polite Past Negative' }, ];
 
-    function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } return array; }
+    function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
     function applyTheme(theme) { document.body.className = `theme-${theme}`; localStorage.setItem('theme', theme); }
 
     function initializeApp() {
@@ -350,24 +349,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setSubMode('verb-plain');
     }
-
+    
     function setSubMode(subMode) {
         activeSubMode = subMode;
         quizSubTabs.forEach(tab => {
             tab.classList.toggle('active', tab.dataset.subMode === subMode);
         });
-
+        
         let data = [];
         let questionTypes = [];
 
-        switch (subMode) {
+        switch(subMode) {
             case 'verb-plain': data = verbs; questionTypes = verbPlainTypes; break;
             case 'verb-polite': data = verbs; questionTypes = verbPoliteTypes; break;
             case 'adj-plain': data = adjectives; questionTypes = adjPlainTypes; break;
             case 'adj-polite': data = adjectives; questionTypes = adjPoliteTypes; break;
             case 'mixed-all': data = [...verbs, ...adjectives]; questionTypes = [...verbPlainTypes, ...verbPoliteTypes, ...adjPlainTypes, ...adjPoliteTypes]; break;
         }
-
+        
         shuffledData = shuffleArray(data);
         activeQuestionTypes = questionTypes;
         startQuiz();
@@ -384,9 +383,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadQuestion() {
         if (currentQuestionIndex >= shuffledData.length) { showEndGame(); return; }
-
+        
         currentItem = shuffledData[currentQuestionIndex];
-
+        
         let possibleQuestions = activeQuestionTypes.filter(q => currentItem[q.ask] !== undefined);
         if (possibleQuestions.length === 0) {
             if (currentItem.type === 'Verb') possibleQuestions = verbPlainTypes;
@@ -418,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         updateQuestionCount();
     }
-
+    
     function flipCard() {
         flashcard.classList.add('is-flipped');
         flipBtn.classList.add('hidden');
@@ -430,12 +429,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuestionIndex++;
         loadQuestion();
     }
-
+    
     function checkTypingAnswer() {
         const userAnswer = typingInput.value.trim();
         const correctAnswer = currentItem[currentQuestionType.ask];
         typingInput.disabled = true;
-
+        
         if (userAnswer === correctAnswer) {
             score++;
             updateScore();
@@ -445,11 +444,11 @@ document.addEventListener('DOMContentLoaded', () => {
             typingFeedback.textContent = `မှားပါတယ်! အဖြေမှန်က: ${correctAnswer}`;
             typingFeedback.classList.add('is-incorrect');
         }
-
+        
         submitAnswerBtn.classList.add('hidden');
         nextQuestionBtn.classList.remove('hidden');
     }
-
+    
     function nextTypingQuestion() {
         currentQuestionIndex++;
         loadQuestion();
@@ -499,14 +498,14 @@ document.addEventListener('DOMContentLoaded', () => {
     tabGuideBtn.addEventListener('click', () => switchMainTab('guide'));
     choiceBtns.forEach(btn => btn.addEventListener('click', () => chooseGameMode(btn.dataset.mode)));
     quizSubTabs.forEach(tab => tab.addEventListener('click', () => setSubMode(tab.dataset.subMode)));
-
+    
     flipBtn.addEventListener('click', flipCard);
     correctBtn.addEventListener('click', () => handleFlashcardFeedback(true));
     incorrectBtn.addEventListener('click', () => handleFlashcardFeedback(false));
-
+    
     submitAnswerBtn.addEventListener('click', checkTypingAnswer);
     typingInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitAnswerBtn.click(); });
     nextQuestionBtn.addEventListener('click', nextTypingQuestion);
-
+    
     restartBtn.addEventListener('click', restartGame);
 });
